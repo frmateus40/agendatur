@@ -1461,7 +1461,37 @@ function closeUserMenu() {
 }
 document.addEventListener('click', e => {
   if (!e.target.closest('.user-dropdown')) closeUserMenu();
+  if (!e.target.closest('#auth-buttons')) closeLoginDropdown();
 });
+
+// ---------- LOGIN DROPDOWN ----------
+function toggleLoginDropdown() {
+  const dd = document.getElementById('login-dropdown');
+  if (dd) dd.classList.toggle('open');
+}
+function closeLoginDropdown() {
+  const dd = document.getElementById('login-dropdown');
+  if (dd) dd.classList.remove('open');
+}
+function submitDropdownLogin() {
+  const emailVal = (document.getElementById('ld-email').value || '').trim().toLowerCase();
+  if (!emailVal || !emailVal.includes('@')) {
+    showNotif('⚠️ Por favor ingresa un correo válido.');
+    return;
+  }
+  let nombre = getNameByEmail(emailVal);
+  if (!nombre) {
+    nombre = emailVal.split('@')[0];
+    nombre = nombre.charAt(0).toUpperCase() + nombre.slice(1);
+  }
+  closeLoginDropdown();
+  setUserSession(nombre);
+  showNotif(`✅ ¡Bienvenido de vuelta, ${nombre.split(' ')[0]}! Has iniciado sesión.`);
+}
+function openRegFromDropdown() {
+  closeLoginDropdown();
+  openAuthModal('register');
+}
 
 // Restaurar sesión al cargar la página
 window.addEventListener('load', () => {

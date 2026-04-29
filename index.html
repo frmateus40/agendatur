@@ -43,10 +43,26 @@
       <!-- ACCIONES -->
       <div class="header-actions">
         <a href="#" class="header-help">📞 Llámanos</a>
-        <!-- Botones cuando NO hay sesión -->
-        <div id="auth-buttons">
-          <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
-          <button class="btn btn-register" onclick="openAuthModal('register')">Registrarse</button>
+        <!-- Icono de acceso cuando NO hay sesión -->
+        <div id="auth-buttons" style="position:relative;">
+          <button class="user-icon-btn" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </button>
+          <div class="login-dropdown" id="login-dropdown">
+            <p class="ld-title">Iniciar sesión</p>
+            <div class="ld-field">
+              <input type="email" id="ld-email" placeholder="Correo electrónico" autocomplete="email" />
+            </div>
+            <div class="ld-field">
+              <input type="password" id="ld-pass" placeholder="Contraseña" autocomplete="current-password" />
+            </div>
+            <button class="btn btn-primary ld-submit" onclick="submitDropdownLogin()">Entrar</button>
+            <a href="#" class="ld-forgot" onclick="return false;">¿Olvidó su contraseña?</a>
+            <p class="ld-no-account">¿No tiene cuenta? <a href="#" onclick="openRegFromDropdown(); return false;">Regístrese aquí</a></p>
+          </div>
         </div>
         <!-- Saludo cuando SÍ hay sesión -->
         <div id="user-greeting" style="display:none;">
