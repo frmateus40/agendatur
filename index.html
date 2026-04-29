@@ -529,7 +529,7 @@
             <p>A pasos de la Torre Eiffel con vistas panorámicas y desayuno incluido.</p>
             <div class="product-price-row">
               <div><small>Desde</small><span class="product-price">$189</span><small>/noche</small></div>
-              <button class="btn btn-primary-sm" onclick="bookItem('Hotel Le Grand Palais')">Reservar</button>
+              <button class="btn btn-primary-sm" onclick="openHotelSearch('Hotel Le Grand Palais','París, Francia')">Reservar</button>
             </div>
           </div>
         </div>
@@ -544,7 +544,7 @@
             <p>Todo incluido frente al mar Caribe, piscinas infinity y spa de lujo.</p>
             <div class="product-price-row">
               <div><small>Desde</small><span class="product-price">$245</span><small>/noche</small></div>
-              <button class="btn btn-primary-sm" onclick="bookItem('Resort Caribe Sol')">Reservar</button>
+              <button class="btn btn-primary-sm" onclick="openHotelSearch('Resort Caribe Sol','Cancún, México')">Reservar</button>
             </div>
           </div>
         </div>
@@ -559,7 +559,7 @@
             <p>El hotel más icónico del mundo con servicio de mayordomo 24/7.</p>
             <div class="product-price-row">
               <div><small>Desde</small><span class="product-price">$890</span><small>/noche</small></div>
-              <button class="btn btn-primary-sm" onclick="bookItem('Burj Al Arab')">Reservar</button>
+              <button class="btn btn-primary-sm" onclick="openHotelSearch('Burj Al Arab Suites','Dubái, EAU')">Reservar</button>
             </div>
           </div>
         </div>
@@ -574,7 +574,7 @@
             <p>En el corazón de Manhattan, cerca de Times Square y Broadway.</p>
             <div class="product-price-row">
               <div><small>Desde</small><span class="product-price">$320</span><small>/noche</small></div>
-              <button class="btn btn-primary-sm" onclick="bookItem('The Manhattan View')">Reservar</button>
+              <button class="btn btn-primary-sm" onclick="openHotelSearch('The Manhattan View','Nueva York, EE.UU.')">Reservar</button>
             </div>
           </div>
         </div>
@@ -1243,7 +1243,66 @@
   </div>
 
   <!-- ============================================================
-       MODAL RESERVA DE HOTEL
+       MODAL BÚSQUEDA DE HOTEL (paso 1)
+       ============================================================ -->
+  <div class="auth-overlay" id="modal-hotel-search" onclick="if(event.target===this)closeHotelSearch()">
+    <div class="auth-box auth-box-lg">
+      <button class="auth-close" onclick="closeHotelSearch()">✕</button>
+      <div class="auth-header">
+        <div class="hs-hotel-badge" id="hs-hotel-badge">
+          <span style="font-size:1.6rem;">🏨</span>
+          <div>
+            <strong id="hs-hotel-name" style="font-size:1.1rem;color:#1e3a8a;"></strong>
+            <div id="hs-hotel-city" style="font-size:.85rem;color:#64748b;margin-top:2px;"></div>
+          </div>
+        </div>
+        <p style="margin-top:12px;font-size:.88rem;color:#64748b;">Completa los datos para ver disponibilidad</p>
+      </div>
+      <form class="auth-form" id="form-hotel-search" onsubmit="proceedToBooking(event)">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Fecha de ingreso *</label>
+            <input type="date" id="hs-checkin" required />
+          </div>
+          <div class="auth-field">
+            <label>Fecha de salida *</label>
+            <input type="date" id="hs-checkout" required />
+          </div>
+        </div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Número de personas *</label>
+            <select id="hs-guests" class="auth-select" required>
+              <option value="">Seleccionar...</option>
+              <option value="1 persona">1 persona</option>
+              <option value="2 personas">2 personas</option>
+              <option value="3 personas">3 personas</option>
+              <option value="4 personas">4 personas</option>
+              <option value="5 personas">5 personas</option>
+              <option value="6 o más personas">6 o más personas</option>
+            </select>
+          </div>
+          <div class="auth-field">
+            <label>Tipo de habitación *</label>
+            <select id="hs-room" class="auth-select" required>
+              <option value="">Seleccionar...</option>
+              <option value="Estándar">Estándar</option>
+              <option value="Doble">Doble</option>
+              <option value="Deluxe">Deluxe</option>
+              <option value="Suite">Suite</option>
+              <option value="Junior Suite">Junior Suite</option>
+              <option value="Suite Presidencial">Suite Presidencial</option>
+            </select>
+          </div>
+        </div>
+        <div id="hs-msg"></div>
+        <button type="submit" class="btn btn-primary full-width auth-submit">Ver disponibilidad →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL RESERVA DE HOTEL (paso 2)
        ============================================================ -->
   <div class="auth-overlay" id="modal-hotel-booking" onclick="if(event.target===this)closeHotelBooking()">
     <div class="auth-box auth-box-lg">

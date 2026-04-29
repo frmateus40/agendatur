@@ -769,18 +769,67 @@ async function searchHotels() {
 // ---------- MODAL RESERVA HOTEL ----------
 let selectedHotel = null;
 
-function openHotelBooking(name, city) {
+/* ---- PASO 1: modal de búsqueda ---- */
+function openHotelSearch(name, city) {
   selectedHotel = { name, city };
+  document.getElementById('hs-hotel-name').textContent = name;
+  document.getElementById('hs-hotel-city').textContent = city ? '📍 ' + city : '';
+  document.getElementById('hs-msg').innerHTML = '';
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('hs-checkin').min  = today;
+  document.getElementById('hs-checkin').value = '';
+  document.getElementById('hs-checkout').min = today;
+  document.getElementById('hs-checkout').value = '';
+  document.getElementById('hs-guests').value = '';
+  document.getElementById('hs-room').value   = '';
+  document.getElementById('modal-hotel-search').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHotelSearch() {
+  document.getElementById('modal-hotel-search').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function proceedToBooking(e) {
+  e.preventDefault();
+  const checkin  = document.getElementById('hs-checkin').value;
+  const checkout = document.getElementById('hs-checkout').value;
+  const guests   = document.getElementById('hs-guests').value;
+  const room     = document.getElementById('hs-room').value;
+  const msgEl    = document.getElementById('hs-msg');
+
+  if (new Date(checkout) <= new Date(checkin)) {
+    msgEl.innerHTML = '<p style="color:#dc2626;font-size:.85rem;margin-top:4px;">⚠️ La fecha de salida debe ser posterior a la de ingreso.</p>';
+    return;
+  }
+
+  selectedHotel = { ...selectedHotel, checkin, checkout, guests, room };
+  closeHotelSearch();
+  openHotelBooking(selectedHotel.name, selectedHotel.city, selectedHotel);
+}
+
+/* ---- PASO 2: modal de contacto ---- */
+function openHotelBooking(name, city, searchData) {
+  selectedHotel = searchData || { name, city };
   const summary = document.getElementById('bk-hotel-summary');
+  const fmt = d => d ? new Date(d + 'T12:00:00').toLocaleDateString('es-CO', { day:'2-digit', month:'short', year:'numeric' }) : '';
   summary.innerHTML = `
     <div style="background:#f0f4ff;border:1px solid #c7d2fe;border-radius:10px;padding:14px 18px;margin-bottom:18px;">
-      <div style="display:flex;align-items:center;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:${searchData?.checkin ? '10px' : '0'}">
         <span style="font-size:1.5rem;">🏨</span>
         <div>
           <strong style="color:#1e3a8a;font-size:1rem;">${name}</strong>
-          <div style="font-size:.85rem;color:#64748b;margin-top:2px;">📍 ${city}</div>
+          ${city ? `<div style="font-size:.85rem;color:#64748b;margin-top:2px;">📍 ${city}</div>` : ''}
         </div>
       </div>
+      ${searchData?.checkin ? `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:.83rem;color:#374151;border-top:1px solid #c7d2fe;padding-top:10px;margin-top:4px;">
+        <div><span style="color:#64748b;">Ingreso:</span><br><strong>${fmt(searchData.checkin)}</strong></div>
+        <div><span style="color:#64748b;">Salida:</span><br><strong>${fmt(searchData.checkout)}</strong></div>
+        <div><span style="color:#64748b;">Personas:</span><br><strong>${searchData.guests}</strong></div>
+        <div><span style="color:#64748b;">Habitación:</span><br><strong>${searchData.room}</strong></div>
+      </div>` : ''}
     </div>`;
 
   const savedUser = localStorage.getItem('agt_user');
@@ -809,12 +858,19 @@ async function submitHotelBooking(e) {
   const hNotes = document.getElementById('hbk-notes').value.trim();
   const now    = new Date().toLocaleString('es-CO');
 
+  const searchInfo = [
+    selectedHotel.checkin  ? `Ingreso: ${selectedHotel.checkin}`   : '',
+    selectedHotel.checkout ? `Salida: ${selectedHotel.checkout}`   : '',
+    selectedHotel.guests   ? `Personas: ${selectedHotel.guests}`   : '',
+    selectedHotel.room     ? `Habitación: ${selectedHotel.room}`   : '',
+  ].filter(Boolean).join(' | ');
+
   const templateParams = {
     nombre:    `[SOLICITUD PRECIO HOTEL] ${hName}`,
-    cedula:    `${selectedHotel.name} · ${selectedHotel.city}`,
+    cedula:    `${selectedHotel.name} · ${selectedHotel.city || ''}`,
     telefono:  hPhone,
     correo:    hEmail,
-    fecha_nac: `Hotel: ${selectedHotel.name} en ${selectedHotel.city}`,
+    fecha_nac: `Hotel: ${selectedHotel.name}${selectedHotel.city ? ' en ' + selectedHotel.city : ''}${searchInfo ? ' — ' + searchInfo : ''}`,
     fecha_reg: `Solicitud: ${now}${hNotes ? ' | Notas: ' + hNotes : ''}`,
   };
 
@@ -860,7 +916,7 @@ function scrollToSearch(tabId) {
 
 // ---------- RESERVAR ITEM ----------
 function bookItem(name) {
-  showModal('✅ ¡Reserva iniciada!', `Has seleccionado "${name}". Un asesor se comunicará contigo para completar tu reserva.`);
+  openHotelSearch(name, '');
 }
 
 // ---------- FORMULARIO CONTACTO ----------

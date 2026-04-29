@@ -638,6 +638,18 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   transition: border-color var(--transition), box-shadow var(--transition);
 }
 .auth-field input:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(35,51,200,.1); }
+.auth-select {
+  padding: 11px 14px; border: 2px solid var(--border); border-radius: 9px;
+  font-size: .93rem; color: var(--text); width: 100%; background: #fff;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  cursor: pointer; appearance: auto;
+}
+.auth-select:focus { outline: none; border-color: var(--brand); box-shadow: 0 0 0 3px rgba(35,51,200,.1); }
+.hs-hotel-badge {
+  display: flex; align-items: center; gap: 12px;
+  background: #f0f4ff; border: 1px solid #c7d2fe; border-radius: 12px;
+  padding: 14px 18px; margin-bottom: 4px;
+}
 
 .pass-wrap { position: relative; }
 .pass-wrap input { padding-right: 42px; }
