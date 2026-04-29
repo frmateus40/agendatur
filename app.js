@@ -836,6 +836,48 @@ function openHotelSearchPrefilled(name, city) {
   if (hotelSearchCtx.checkout) document.getElementById('hs-checkout').value = hotelSearchCtx.checkout;
 }
 
+// ---------- BÚSQUEDA DE HOTELES DESDE NAVBAR ----------
+function openNavHotelSearch() {
+  const today = new Date().toISOString().split('T')[0];
+  document.getElementById('nav-hotel-checkin').min  = today;
+  document.getElementById('nav-hotel-checkout').min = today;
+  document.getElementById('nav-hotel-checkin').value  = '';
+  document.getElementById('nav-hotel-checkout').value = '';
+  document.getElementById('nav-hotel-city').value   = '';
+  document.getElementById('nav-hotel-guests').value = '';
+  document.getElementById('nav-hotel-room').value   = '';
+  document.getElementById('nav-hotel-msg').innerHTML = '';
+  document.getElementById('modal-nav-hotel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeNavHotelSearch() {
+  document.getElementById('modal-nav-hotel').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function submitNavHotelSearch(e) {
+  e.preventDefault();
+  const cityVal  = document.getElementById('nav-hotel-city').value;
+  const checkin  = document.getElementById('nav-hotel-checkin').value;
+  const checkout = document.getElementById('nav-hotel-checkout').value;
+  const guests   = document.getElementById('nav-hotel-guests').value;
+  const room     = document.getElementById('nav-hotel-room').value;
+  const msgEl    = document.getElementById('nav-hotel-msg');
+
+  if (new Date(checkout) <= new Date(checkin)) {
+    msgEl.innerHTML = '<p style="color:#dc2626;font-size:.85rem;margin-top:4px;">⚠️ La fecha de salida debe ser posterior a la de ingreso.</p>';
+    return;
+  }
+
+  const [displayName, key] = cityVal.split('|');
+  hotelSearchCtx = { city: displayName, checkin, checkout, guests, room };
+
+  closeNavHotelSearch();
+  document.getElementById('hoteles').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  setTimeout(() => showCityHotels(displayName, key), 400);
+}
+
 // ---------- BROWSER DE HOTELES POR CIUDAD ----------
 let cityHotelsAll = [];
 let cityActiveStars = 0;
