@@ -836,6 +836,104 @@ function openHotelSearchPrefilled(name, city) {
   if (hotelSearchCtx.checkout) document.getElementById('hs-checkout').value = hotelSearchCtx.checkout;
 }
 
+// ---------- BROWSER DE HOTELES POR CIUDAD ----------
+let cityHotelsAll = [];
+let cityActiveStars = 0;
+let cityActiveSort  = 'stars';
+
+function showCityHotels(displayName, key) {
+  const data = hotelData[key] || hotelData['default'];
+  cityHotelsAll = data.map(h => ({ ...h, priceCOP: Math.round(h.price * copRate / 1000) * 1000 }));
+  cityActiveStars = 0;
+  cityActiveSort  = 'stars';
+
+  document.getElementById('city-browser').style.display       = 'none';
+  const panel = document.getElementById('city-hotels-panel');
+  panel.style.display = 'block';
+  document.getElementById('city-panel-title').textContent = '🏨 Hoteles en ' + displayName;
+
+  // Filtros
+  const starCounts = [3,4,5].map(s => ({ s, n: cityHotelsAll.filter(h => h.stars === s).length }));
+  document.getElementById('city-panel-filters').innerHTML = `
+    <div class="filter-bar">
+      <span class="filter-label">Estrellas:</span>
+      <div class="filter-chips">
+        <button class="filter-chip active" onclick="cityFilterStars(0,this)">Todas (${cityHotelsAll.length})</button>
+        ${starCounts.map(({s,n}) => n ? `<button class="filter-chip" onclick="cityFilterStars(${s},this)">${'★'.repeat(s)} (${n})</button>` : '').join('')}
+      </div>
+      <div class="filter-divider"></div>
+      <div class="filter-sort" style="display:flex;align-items:center;gap:8px;">
+        <span class="filter-label">Ordenar:</span>
+        <select onchange="citySort(this.value)">
+          <option value="stars">Más valorados</option>
+          <option value="asc">Precio: menor → mayor</option>
+          <option value="desc">Precio: mayor → menor</option>
+        </select>
+      </div>
+    </div>`;
+
+  renderCityHotelCards(cityHotelsAll, displayName);
+  panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function backToCities() {
+  document.getElementById('city-hotels-panel').style.display = 'none';
+  document.getElementById('city-browser').style.display      = 'block';
+  document.getElementById('hoteles').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function cityFilterStars(stars, btn) {
+  cityActiveStars = stars;
+  document.querySelectorAll('#city-panel-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  applyCityFilters();
+}
+
+function citySort(order) {
+  cityActiveSort = order;
+  applyCityFilters();
+}
+
+function applyCityFilters() {
+  let list = cityActiveStars === 0 ? [...cityHotelsAll] : cityHotelsAll.filter(h => h.stars === cityActiveStars);
+  if (cityActiveSort === 'asc')       list.sort((a,b) => a.priceCOP - b.priceCOP);
+  else if (cityActiveSort === 'desc') list.sort((a,b) => b.priceCOP - a.priceCOP);
+  else                                list.sort((a,b) => b.stars - a.stars);
+  const city = document.getElementById('city-panel-title').textContent.replace('🏨 Hoteles en ','');
+  renderCityHotelCards(list, city);
+}
+
+function renderCityHotelCards(hotels, cityDisplay) {
+  const grid = document.getElementById('city-hotels-grid');
+  grid.innerHTML = '';
+  if (!hotels.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#64748b;">
+      <p style="font-size:1rem;font-weight:600;">No hay hoteles con ese filtro.</p>
+      <button class="btn btn-outline" style="margin-top:12px;" onclick="cityFilterStars(0,document.querySelector('#city-panel-filters .filter-chip'))">Ver todos</button>
+    </div>`;
+    return;
+  }
+  hotels.forEach(h => {
+    const stars    = '★'.repeat(h.stars) + '☆'.repeat(5 - h.stars);
+    const card     = document.createElement('div');
+    card.className = 'result-card';
+    const safeName = h.name.replace(/'/g, "\\'");
+    const safeCity = cityDisplay.replace(/'/g, "\\'");
+    card.innerHTML = `
+      <div style="height:170px;background:url('${h.img}') center/cover no-repeat;border-radius:var(--radius) var(--radius) 0 0;"></div>
+      <div class="card-body">
+        <div style="color:#f59e0b;font-size:.88rem;margin-bottom:4px;">${stars}</div>
+        <h4>${h.name}</h4>
+        <p>${h.desc}</p>
+        <div class="product-price-row">
+          <div style="font-size:.8rem;color:#64748b;font-weight:600;">Consulta precio con asesor</div>
+          <button class="btn btn-primary-sm" onclick="openHotelSearch('${safeName}','${safeCity}')">Reservar</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
 // ---------- MODAL RESERVA HOTEL ----------
 let selectedHotel = null;
 
