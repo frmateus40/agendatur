@@ -30,7 +30,7 @@
       <!-- NAVEGACIÓN PRINCIPAL -->
       <nav class="nav" id="nav">
         <a href="#search" class="nav-link">Vuelos</a>
-        <a href="#" class="nav-link" onclick="openNavHotelSearch(); return false;">Hoteles</a>
+        <a href="#hoteles" class="nav-link">Hoteles</a>
         <a href="#vuelo-hotel" class="nav-link">Vuelo + Hotel</a>
         <a href="#tours" class="nav-link">Tours</a>
         <a href="#paquetes" class="nav-link">Paquetes</a>
@@ -507,163 +507,109 @@
   </section>
 
   <!-- ============================================================
-       HOTELES POR CIUDAD
+       HOTELES — BUSCADOR + RESULTADOS
        ============================================================ -->
-  <section class="section" id="hoteles">
-    <div class="container">
+  <section id="hoteles" class="hotel-search-section">
 
-      <!-- BROWSER DE CIUDADES -->
-      <div id="city-browser">
-        <div class="section-header-row" style="margin-bottom:32px;">
-          <div>
-            <h2 class="section-title left">🏨 Hoteles por destino</h2>
-            <p class="section-sub left">Elige tu ciudad y explora los mejores hoteles</p>
+    <!-- BANNER BUSCADOR -->
+    <div class="hotel-search-banner">
+      <div class="container">
+        <h2 class="hotel-search-title">🏨 Encuentra tu hotel ideal</h2>
+        <p class="hotel-search-sub">Busca por ciudad, elige tus fechas y filtra por tus preferencias</p>
+        <form class="hotel-search-bar" onsubmit="runHotelSearch(event)">
+          <div class="hsb-field">
+            <label>Destino</label>
+            <select id="hsb-city" class="hsb-select" required>
+              <option value="">¿A dónde vas?</option>
+              <optgroup label="🇨🇴 Colombia">
+                <option value="Bogotá|bogota">Bogotá</option>
+                <option value="Medellín|medellin">Medellín</option>
+                <option value="Cartagena|cartagena">Cartagena</option>
+                <option value="Cali|cali">Cali</option>
+                <option value="Barranquilla|barranquilla">Barranquilla</option>
+              </optgroup>
+              <optgroup label="🌴 México & Caribe">
+                <option value="Cancún|cancun">Cancún</option>
+                <option value="Ciudad de México|ciudad de mexico">Ciudad de México</option>
+                <option value="Punta Cana|punta cana">Punta Cana</option>
+                <option value="La Habana|la habana">La Habana</option>
+                <option value="Santo Domingo|santo domingo">Santo Domingo</option>
+              </optgroup>
+              <optgroup label="🌎 Suramérica">
+                <option value="Buenos Aires|buenos aires">Buenos Aires</option>
+                <option value="Lima|lima">Lima</option>
+                <option value="Cusco|cusco">Cusco</option>
+                <option value="Río de Janeiro|rio de janeiro">Río de Janeiro</option>
+                <option value="Santiago de Chile|santiago">Santiago de Chile</option>
+                <option value="São Paulo|sao paulo">São Paulo</option>
+                <option value="Ciudad de Panamá|ciudad de panama">Ciudad de Panamá</option>
+                <option value="Montevideo|montevideo">Montevideo</option>
+                <option value="Quito|quito">Quito</option>
+              </optgroup>
+              <optgroup label="🇺🇸 Estados Unidos">
+                <option value="Miami|miami">Miami</option>
+                <option value="Nueva York|nueva york">Nueva York</option>
+                <option value="Las Vegas|las vegas">Las Vegas</option>
+                <option value="Orlando|orlando">Orlando</option>
+                <option value="Los Ángeles|los angeles">Los Ángeles</option>
+                <option value="San Francisco|san francisco">San Francisco</option>
+              </optgroup>
+              <optgroup label="🇪🇺 Europa">
+                <option value="París|paris">París</option>
+                <option value="Madrid|madrid">Madrid</option>
+                <option value="Barcelona|barcelona">Barcelona</option>
+                <option value="Roma|roma">Roma</option>
+                <option value="Londres|londres">Londres</option>
+                <option value="Ámsterdam|amsterdam">Ámsterdam</option>
+                <option value="Lisboa|lisboa">Lisboa</option>
+                <option value="Berlín|berlin">Berlín</option>
+                <option value="Viena|viena">Viena</option>
+                <option value="Praga|praga">Praga</option>
+              </optgroup>
+            </select>
           </div>
-        </div>
-
-        <!-- Colombia -->
-        <div class="hotel-region">
-          <h3 class="region-title">🇨🇴 Colombia</h3>
-          <div class="city-grid">
-            <div class="city-card" onclick="showCityHotels('Bogotá','bogota')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Bogotá</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Medellín','medellin')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1611095564985-9aa2db550b8c?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Medellín</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Cartagena','cartagena')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Cartagena</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Cali','cali')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1609198092458-38a293c7ac4b?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Cali</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Barranquilla','barranquilla')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1518998053901-5348d3961a04?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Barranquilla</span><span class="city-count">3 hoteles</span></div>
-            </div>
+          <div class="hsb-field">
+            <label>Ingreso</label>
+            <input type="date" id="hsb-checkin" required />
           </div>
-        </div>
-
-        <!-- México & Caribe -->
-        <div class="hotel-region">
-          <h3 class="region-title">🌴 México & Caribe</h3>
-          <div class="city-grid">
-            <div class="city-card" onclick="showCityHotels('Cancún','cancun')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1510097467424-192d713fd8b2?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Cancún</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Ciudad de México','ciudad de mexico')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1518105779142-d975f22f1b0a?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Ciudad de México</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Punta Cana','punta cana')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1582719471137-c3967ffb1c42?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Punta Cana</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('La Habana','la habana')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1500759285222-a95626b934cb?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">La Habana</span><span class="city-count">4 hoteles</span></div>
-            </div>
+          <div class="hsb-field">
+            <label>Salida</label>
+            <input type="date" id="hsb-checkout" required />
           </div>
-        </div>
-
-        <!-- Suramérica -->
-        <div class="hotel-region">
-          <h3 class="region-title">🌎 Suramérica</h3>
-          <div class="city-grid">
-            <div class="city-card" onclick="showCityHotels('Buenos Aires','buenos aires')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1612294037637-ec328d0e075e?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Buenos Aires</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Lima','lima')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1531968455001-5c5272a41129?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Lima</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Cusco','cusco')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1526392060635-9d6019884377?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Cusco</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Río de Janeiro','rio de janeiro')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Río de Janeiro</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Santiago de Chile','santiago')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1554595666-19ceabe14980?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Santiago</span><span class="city-count">4 hoteles</span></div>
-            </div>
+          <div class="hsb-field">
+            <label>Personas</label>
+            <select id="hsb-guests" class="hsb-select" required>
+              <option value="">N.º</option>
+              <option value="1 persona">1</option>
+              <option value="2 personas">2</option>
+              <option value="3 personas">3</option>
+              <option value="4 personas">4</option>
+              <option value="5 o más personas">5+</option>
+            </select>
           </div>
-        </div>
-
-        <!-- EE.UU. -->
-        <div class="hotel-region">
-          <h3 class="region-title">🇺🇸 Estados Unidos</h3>
-          <div class="city-grid">
-            <div class="city-card" onclick="showCityHotels('Miami','miami')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Miami</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Nueva York','nueva york')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Nueva York</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Las Vegas','las vegas')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1470790376778-a9fbc86d70e2?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Las Vegas</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Orlando','orlando')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1575936123452-b67c3203c357?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Orlando</span><span class="city-count">4 hoteles</span></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Europa -->
-        <div class="hotel-region">
-          <h3 class="region-title">🇪🇺 Europa</h3>
-          <div class="city-grid">
-            <div class="city-card" onclick="showCityHotels('París','paris')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">París</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Madrid','madrid')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Madrid</span><span class="city-count">5 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Barcelona','barcelona')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1523531294919-4bcd7c65e216?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Barcelona</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Roma','roma')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Roma</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Londres','londres')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Londres</span><span class="city-count">4 hoteles</span></div>
-            </div>
-            <div class="city-card" onclick="showCityHotels('Ámsterdam','amsterdam')">
-              <div class="city-card-img" style="background-image:url('https://images.unsplash.com/photo-1534351590666-13e3e96b5017?w=400')"></div>
-              <div class="city-card-info"><span class="city-name">Ámsterdam</span><span class="city-count">4 hoteles</span></div>
-            </div>
-          </div>
-        </div>
-      </div><!-- /city-browser -->
-
-      <!-- PANEL DE HOTELES POR CIUDAD (oculto hasta seleccionar ciudad) -->
-      <div id="city-hotels-panel" style="display:none;">
-        <div class="city-panel-header">
-          <button class="btn btn-outline" onclick="backToCities()">← Volver a destinos</button>
-          <h2 id="city-panel-title" class="section-title left" style="margin:0;"></h2>
-        </div>
-        <div id="city-panel-filters"></div>
-        <div class="city-hotels-grid" id="city-hotels-grid"></div>
+          <button type="submit" class="hsb-btn">Buscar hoteles</button>
+        </form>
+        <div id="hsb-msg" style="text-align:center;margin-top:10px;color:#fca5a5;font-size:.88rem;"></div>
       </div>
-
     </div>
+
+    <!-- RESULTADOS -->
+    <div class="container" style="padding-top:40px;padding-bottom:60px;">
+      <!-- Estado vacío -->
+      <div id="hotel-empty-state" style="text-align:center;padding:60px 20px;color:#94a3b8;">
+        <div style="font-size:3rem;margin-bottom:16px;">🏨</div>
+        <p style="font-size:1.1rem;font-weight:600;color:#64748b;">Elige un destino y tus fechas para ver hoteles disponibles</p>
+      </div>
+      <!-- Filtros + grid (ocultos hasta buscar) -->
+      <div id="hotel-results-wrap" style="display:none;">
+        <div class="hotel-results-header">
+          <h3 id="hotel-results-title" style="font-size:1.2rem;font-weight:700;"></h3>
+        </div>
+        <div id="hotel-results-filters"></div>
+        <div class="city-hotels-grid" id="hotel-results-grid"></div>
+      </div>
+    </div>
+
   </section>
 
   <!-- ============================================================

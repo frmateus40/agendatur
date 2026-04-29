@@ -291,28 +291,45 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   .filter-bar { gap: 10px; }
 }
 
-/* ---- BROWSER DE CIUDADES ---- */
-.hotel-region { margin-bottom: 36px; }
-.region-title { font-size: 1rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: .06em; margin-bottom: 14px; }
-.city-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
-.city-card {
-  border-radius: 12px; overflow: hidden; cursor: pointer;
-  box-shadow: var(--shadow); transition: transform .2s, box-shadow .2s;
-  background: #fff;
+/* ---- SECCIÓN HOTELES CON BUSCADOR ---- */
+.hotel-search-section { background: #f8fafc; }
+
+.hotel-search-banner {
+  background: linear-gradient(135deg, #1e3a8a 0%, #2333c8 60%, #1d4ed8 100%);
+  padding: 52px 0 44px;
+  text-align: center;
 }
-.city-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-md); }
-.city-card-img { height: 110px; background-size: cover; background-position: center; }
-.city-card-info { padding: 10px 12px; display: flex; flex-direction: column; gap: 2px; }
-.city-name { font-size: .9rem; font-weight: 700; color: var(--text); }
-.city-count { font-size: .75rem; color: var(--text-muted); }
+.hotel-search-title { color: #fff; font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+.hotel-search-sub   { color: rgba(255,255,255,.75); font-size: .95rem; margin-bottom: 32px; }
 
-/* ---- PANEL DE HOTELES POR CIUDAD ---- */
-.city-panel-header { display: flex; align-items: center; gap: 20px; margin-bottom: 24px; flex-wrap: wrap; }
-.city-hotels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; margin-top: 20px; }
+.hotel-search-bar {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: flex-end;
+  background: #fff; border-radius: 14px; padding: 18px 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,.18); max-width: 900px; margin: 0 auto;
+}
+.hsb-field { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 130px; }
+.hsb-field label { font-size: .72rem; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: .05em; }
+.hsb-field input, .hsb-select {
+  padding: 10px 12px; border: 2px solid #e2e8f0; border-radius: 8px;
+  font-size: .9rem; color: #1e293b; background: #fff; width: 100%;
+  transition: border-color .18s;
+}
+.hsb-field input:focus, .hsb-select:focus { outline: none; border-color: #2333c8; }
+.hsb-btn {
+  background: #f97316; color: #fff; border: none; border-radius: 10px;
+  padding: 12px 28px; font-size: .95rem; font-weight: 700; cursor: pointer;
+  transition: background .18s; white-space: nowrap; align-self: flex-end;
+}
+.hsb-btn:hover { background: #ea6c0a; }
 
-@media (max-width: 480px) {
-  .city-grid { grid-template-columns: repeat(2, 1fr); }
-  .city-card-img { height: 90px; }
+.hotel-results-header { margin-bottom: 16px; }
+.city-hotels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 22px; margin-top: 8px; }
+
+@media (max-width: 700px) {
+  .hotel-search-bar { flex-direction: column; }
+  .hsb-field { min-width: 100%; }
+  .hsb-btn { width: 100%; }
+  .hotel-search-title { font-size: 1.4rem; }
 }
 
 /* ---- PROMO BANNER ---- */

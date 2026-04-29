@@ -836,7 +836,104 @@ function openHotelSearchPrefilled(name, city) {
   if (hotelSearchCtx.checkout) document.getElementById('hs-checkout').value = hotelSearchCtx.checkout;
 }
 
-// ---------- BÚSQUEDA DE HOTELES DESDE NAVBAR ----------
+// ---------- BUSCADOR INTEGRADO EN SECCIÓN HOTELES ----------
+function runHotelSearch(e) {
+  e.preventDefault();
+  const cityVal  = document.getElementById('hsb-city').value;
+  const checkin  = document.getElementById('hsb-checkin').value;
+  const checkout = document.getElementById('hsb-checkout').value;
+  const guests   = document.getElementById('hsb-guests').value;
+  const msgEl    = document.getElementById('hsb-msg');
+
+  if (new Date(checkout) <= new Date(checkin)) {
+    msgEl.textContent = '⚠️ La fecha de salida debe ser posterior a la de ingreso.';
+    return;
+  }
+  msgEl.textContent = '';
+
+  const [displayName, key] = cityVal.split('|');
+  hotelSearchCtx = { city: displayName, checkin, checkout, guests };
+
+  const data = hotelData[key] || hotelData['default'];
+  cityHotelsAll   = data.map(h => ({ ...h, priceCOP: Math.round(h.price * copRate / 1000) * 1000 }));
+  cityActiveStars = 0;
+  cityActiveSort  = 'stars';
+
+  document.getElementById('hotel-empty-state').style.display  = 'none';
+  document.getElementById('hotel-results-wrap').style.display = 'block';
+  document.getElementById('hotel-results-title').textContent  =
+    `🏨 ${cityHotelsAll.length} hoteles en ${displayName}`;
+
+  // Filtros
+  const starCounts = [3,4,5].map(s => ({ s, n: cityHotelsAll.filter(h => h.stars === s).length }));
+  document.getElementById('hotel-results-filters').innerHTML = `
+    <div class="filter-bar">
+      <span class="filter-label">Estrellas:</span>
+      <div class="filter-chips">
+        <button class="filter-chip active" onclick="hsFilterStars(0,this)">Todas (${cityHotelsAll.length})</button>
+        ${starCounts.map(({s,n}) => n ? `<button class="filter-chip" onclick="hsFilterStars(${s},this)">${'★'.repeat(s)} (${n})</button>` : '').join('')}
+      </div>
+      <div class="filter-divider"></div>
+      <div class="filter-sort" style="display:flex;align-items:center;gap:8px;">
+        <span class="filter-label">Ordenar:</span>
+        <select onchange="hsSort(this.value)">
+          <option value="stars">Más valorados</option>
+          <option value="asc">Precio: menor → mayor</option>
+          <option value="desc">Precio: mayor → menor</option>
+        </select>
+      </div>
+    </div>`;
+
+  hsRenderCards(cityHotelsAll, displayName);
+  document.getElementById('hotel-results-wrap').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function hsFilterStars(stars, btn) {
+  cityActiveStars = stars;
+  document.querySelectorAll('#hotel-results-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  hsApplyFilters();
+}
+function hsSort(order) { cityActiveSort = order; hsApplyFilters(); }
+function hsApplyFilters() {
+  let list = cityActiveStars === 0 ? [...cityHotelsAll] : cityHotelsAll.filter(h => h.stars === cityActiveStars);
+  if (cityActiveSort === 'asc')       list.sort((a,b) => a.priceCOP - b.priceCOP);
+  else if (cityActiveSort === 'desc') list.sort((a,b) => b.priceCOP - a.priceCOP);
+  else                                list.sort((a,b) => b.stars - a.stars);
+  hsRenderCards(list, hotelSearchCtx.city || '');
+}
+function hsRenderCards(hotels, cityDisplay) {
+  const grid = document.getElementById('hotel-results-grid');
+  grid.innerHTML = '';
+  if (!hotels.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#64748b;">
+      <p>No hay hoteles con ese filtro.</p>
+      <button class="btn btn-outline" style="margin-top:12px;" onclick="hsFilterStars(0,document.querySelector('#hotel-results-filters .filter-chip'))">Ver todos</button>
+    </div>`;
+    return;
+  }
+  hotels.forEach(h => {
+    const stars    = '★'.repeat(h.stars) + '☆'.repeat(5 - h.stars);
+    const card     = document.createElement('div');
+    card.className = 'result-card';
+    const safeName = h.name.replace(/'/g, "\\'");
+    const safeCity = cityDisplay.replace(/'/g, "\\'");
+    card.innerHTML = `
+      <div style="height:170px;background:url('${h.img}') center/cover no-repeat;border-radius:var(--radius) var(--radius) 0 0;"></div>
+      <div class="card-body">
+        <div style="color:#f59e0b;font-size:.88rem;margin-bottom:4px;">${stars}</div>
+        <h4>${h.name}</h4>
+        <p>${h.desc}</p>
+        <div class="product-price-row">
+          <div style="font-size:.8rem;color:#64748b;font-weight:600;">Consulta precio con asesor</div>
+          <button class="btn btn-primary-sm" onclick="openHotelSearchPrefilled('${safeName}','${safeCity}')">Reservar</button>
+        </div>
+      </div>`;
+    grid.appendChild(card);
+  });
+}
+
+// ---------- BÚSQUEDA DE HOTELES DESDE NAVBAR (legacy) ----------
 function openNavHotelSearch() {
   const today = new Date().toISOString().split('T')[0];
   document.getElementById('nav-hotel-checkin').min  = today;
