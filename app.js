@@ -1425,17 +1425,29 @@ function getNameByEmail(correo) {
   return users[correo.toLowerCase()] || null;
 }
 
-// Activar sesión y mostrar nombre en el header
+// Obtener iniciales del nombre (primera letra nombre + primera letra apellido)
+function getInitials(nombre) {
+  const parts = nombre.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 1) return parts[0].substring(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+// Activar sesión y mostrar iniciales en el icono de usuario
 function setUserSession(nombre) {
   localStorage.setItem('agt_user', nombre);
 
-  const primerNombre = nombre.trim().split(' ')[0];
-  const inicial      = primerNombre.charAt(0).toUpperCase();
+  const btn        = document.getElementById('user-icon-btn');
+  const svgEl      = document.getElementById('user-icon-svg');
+  const initialsEl = document.getElementById('user-icon-initials');
+  const nameDisp   = document.getElementById('uid-name-display');
 
-  document.getElementById('user-name-display').textContent = primerNombre;
-  document.getElementById('user-avatar').textContent       = inicial;
-  document.getElementById('auth-buttons').style.display   = 'none';
-  document.getElementById('user-greeting').style.display  = 'flex';
+  if (svgEl)      svgEl.style.display      = 'none';
+  if (initialsEl) initialsEl.textContent   = getInitials(nombre);
+  if (btn)        btn.classList.add('logged-in');
+  if (nameDisp)   nameDisp.textContent     = nombre;
+
+  closeLoginDropdown();
+  document.getElementById('user-greeting').style.display = 'none';
   const navMobile = document.getElementById('nav-auth-mobile');
   if (navMobile) navMobile.style.display = 'none';
 }
@@ -1443,11 +1455,19 @@ function setUserSession(nombre) {
 // Cerrar sesión
 function logout() {
   localStorage.removeItem('agt_user');
-  document.getElementById('auth-buttons').style.display  = 'flex';
+
+  const btn        = document.getElementById('user-icon-btn');
+  const svgEl      = document.getElementById('user-icon-svg');
+  const initialsEl = document.getElementById('user-icon-initials');
+
+  if (svgEl)      svgEl.style.display    = '';
+  if (initialsEl) initialsEl.textContent = '';
+  if (btn)        btn.classList.remove('logged-in');
+
+  closeLoginDropdown();
   document.getElementById('user-greeting').style.display = 'none';
   const navMobile = document.getElementById('nav-auth-mobile');
   if (navMobile) navMobile.style.display = '';
-  closeUserMenu();
   showNotif('👋 Hasta pronto — sesión cerrada correctamente.');
 }
 
@@ -1464,14 +1484,26 @@ document.addEventListener('click', e => {
   if (!e.target.closest('#auth-buttons')) closeLoginDropdown();
 });
 
-// ---------- LOGIN DROPDOWN ----------
+// ---------- LOGIN / USER DROPDOWN ----------
 function toggleLoginDropdown() {
-  const dd = document.getElementById('login-dropdown');
-  if (dd) dd.classList.toggle('open');
+  const isLoggedIn = !!localStorage.getItem('agt_user');
+  if (isLoggedIn) {
+    const dd = document.getElementById('uid-menu');
+    if (dd) dd.classList.toggle('open');
+    const ld = document.getElementById('login-dropdown');
+    if (ld) ld.classList.remove('open');
+  } else {
+    const dd = document.getElementById('login-dropdown');
+    if (dd) dd.classList.toggle('open');
+    const um = document.getElementById('uid-menu');
+    if (um) um.classList.remove('open');
+  }
 }
 function closeLoginDropdown() {
   const dd = document.getElementById('login-dropdown');
   if (dd) dd.classList.remove('open');
+  const um = document.getElementById('uid-menu');
+  if (um) um.classList.remove('open');
 }
 function submitDropdownLogin() {
   const emailVal = (document.getElementById('ld-email').value || '').trim().toLowerCase();

@@ -112,6 +112,19 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 .ld-no-account { text-align: center; font-size: .81rem; color: var(--text-muted); margin: 10px 0 0; }
 .ld-no-account a { color: var(--brand); font-weight: 600; text-decoration: none; }
 .ld-no-account a:hover { text-decoration: underline; }
+.user-icon-btn.logged-in { background: var(--brand); color: #fff; border-color: var(--brand); }
+.user-icon-btn.logged-in:hover { background: var(--brand-dark); }
+#user-icon-initials { font-size: .82rem; font-weight: 800; letter-spacing: .5px; }
+.ld-name-full { font-size: .85rem; color: var(--text-muted); margin: 0 0 10px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.ld-drop-item {
+  display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+  font-size: .88rem; color: var(--text); text-decoration: none; background: none;
+  border: none; width: 100%; text-align: left; cursor: pointer; border-radius: 6px;
+  transition: background var(--transition);
+}
+.ld-drop-item:hover { background: var(--bg-light); color: var(--brand); }
+.ld-drop-logout { color: #dc2626; }
+.ld-drop-logout:hover { background: #fee2e2 !important; color: #dc2626 !important; }
 
 /* ---- MENÚ DE USUARIO LOGUEADO ---- */
 .user-menu { display: flex; align-items: center; gap: 10px; position: relative; }
@@ -681,6 +694,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   .nav { display: none; }
   .hamburger { display: block; }
   .header-inner { justify-content: center; position: relative; }
+  .hamburger { position: absolute; left: 16px; }
   .header-actions { position: absolute; right: 16px; }
   .nav.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 16px 20px; gap: 8px; z-index: 999; box-shadow: var(--shadow-md); }
   .nav.open .nav-link { padding: 12px 16px; }

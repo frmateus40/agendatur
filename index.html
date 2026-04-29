@@ -16,6 +16,9 @@
   <header class="header" id="top">
     <div class="container header-inner">
 
+      <!-- HAMBURGER (izquierda en móvil) -->
+      <button class="hamburger" id="hamburger" aria-label="Menú">&#9776;</button>
+
       <!-- LOGO -->
       <a href="#" class="logo">
         <div class="logo-text-wrap">
@@ -43,14 +46,18 @@
       <!-- ACCIONES -->
       <div class="header-actions">
         <a href="#" class="header-help">📞 Llámanos</a>
-        <!-- Icono de acceso cuando NO hay sesión -->
+        <!-- Icono de usuario (siempre visible) -->
         <div id="auth-buttons" style="position:relative;">
           <button class="user-icon-btn" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-              <circle cx="12" cy="7" r="4"/>
-            </svg>
+            <span id="user-icon-svg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
+            </span>
+            <span id="user-icon-initials"></span>
           </button>
+          <!-- Dropdown: iniciar sesión (sin sesión) -->
           <div class="login-dropdown" id="login-dropdown">
             <p class="ld-title">Iniciar sesión</p>
             <div class="ld-field">
@@ -63,28 +70,21 @@
             <a href="#" class="ld-forgot" onclick="return false;">¿Olvidó su contraseña?</a>
             <p class="ld-no-account">¿No tiene cuenta? <a href="#" onclick="openRegFromDropdown(); return false;">Regístrese aquí</a></p>
           </div>
-        </div>
-        <!-- Saludo cuando SÍ hay sesión -->
-        <div id="user-greeting" style="display:none;">
-          <div class="user-menu">
-            <div class="user-avatar" id="user-avatar">J</div>
-            <div class="user-info">
-              <span class="user-hello">Hola,</span>
-              <span class="user-name" id="user-name-display">Usuario</span>
-            </div>
-            <div class="user-dropdown">
-              <button class="user-drop-btn" onclick="toggleUserMenu()">▾</button>
-              <div class="user-drop-panel" id="user-drop-panel">
-                <a href="#" class="drop-item">👤 Mi perfil</a>
-                <a href="#" class="drop-item">🧳 Mis viajes</a>
-                <a href="#" class="drop-item">⚙ Configuración</a>
-                <hr class="drop-divider"/>
-                <button class="drop-item drop-logout" onclick="logout()">🚪 Cerrar sesión</button>
-              </div>
-            </div>
+          <!-- Dropdown: menú de usuario (con sesión) -->
+          <div class="login-dropdown" id="uid-menu">
+            <p id="uid-name-display" class="ld-name-full"></p>
+            <a href="#" class="ld-drop-item">👤 Mi perfil</a>
+            <a href="#" class="ld-drop-item">🧳 Mis viajes</a>
+            <a href="#" class="ld-drop-item">⚙ Configuración</a>
+            <hr class="drop-divider" style="margin:6px 0;"/>
+            <button class="ld-drop-item ld-drop-logout" onclick="logout()">🚪 Cerrar sesión</button>
           </div>
         </div>
-        <button class="hamburger" id="hamburger" aria-label="Menú">&#9776;</button>
+        <!-- Compatibilidad JS (oculto) -->
+        <div id="user-greeting" style="display:none;">
+          <span id="user-name-display" style="display:none;"></span>
+          <span id="user-avatar" style="display:none;"></span>
+        </div>
       </div>
     </div>
 
