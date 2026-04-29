@@ -659,7 +659,11 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 
 @media (max-width: 768px) {
   .header-help { display: none; }
-  .btn-login { display: none; }
+  .btn-login  { display: none; }
+  .btn-register { display: none; }
+  .user-hello { display: none; }
+  .user-info  { display: flex; }
+  .user-name  { font-size: .85rem; }
   .promo-grid { grid-template-columns: 1fr; }
   .contact-layout { grid-template-columns: 1fr; gap: 32px; }
   .contact-cards { grid-template-columns: 1fr; }
