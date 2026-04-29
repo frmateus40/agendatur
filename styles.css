@@ -649,6 +649,8 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   .combo-img img { height: 260px; }
   .nav { display: none; }
   .hamburger { display: block; }
+  .header-inner { justify-content: center; position: relative; }
+  .header-actions { position: absolute; right: 16px; }
   .nav.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 16px 20px; gap: 8px; z-index: 999; box-shadow: var(--shadow-md); }
   .nav.open .nav-link { padding: 12px 16px; }
   .header-actions #auth-buttons { display: none !important; }
@@ -672,6 +674,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   .sr-field, .sr-field-sm, .sr-field-xs, .sr-field-lg { flex: none; width: 100%; }
   .dest-scroll { grid-template-columns: repeat(2, 1fr); }
   .footer-top { grid-template-columns: 1fr 1fr; }
+  .footer-brand { grid-column: 1 / -1; }
   .footer-bottom-inner { flex-direction: column; gap: 8px; text-align: center; }
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .searcher-tabs .sr-tab { font-size: .78rem; padding: 12px 4px; }
