@@ -680,6 +680,12 @@ function parseAmadeusHotels(offers, cityCode) {
 }
 
 // ---------- BUSCAR HOTELES ----------
+/* ---- Estado global de filtros de hoteles ---- */
+let allHotels       = [];
+let hotelSearchCtx  = {};
+let activeStarFilter = 0;
+let activeSortOrder  = 'stars';
+
 async function searchHotels() {
   const city = cityInput ? cityInput.value.trim() : '';
   if (!city) {
@@ -687,24 +693,27 @@ async function searchHotels() {
     return;
   }
 
-  const checkin  = document.getElementById('hotel-checkin')?.value  || '';
-  const checkout = document.getElementById('hotel-checkout')?.value || '';
-  const guests   = parseInt(document.getElementById('hotel-guests')?.value) || 2;
+  const checkin   = document.getElementById('hotel-checkin')?.value  || '';
+  const checkout  = document.getElementById('hotel-checkout')?.value || '';
+  const guestsRaw = document.getElementById('hotel-guests')?.value   || '';
+  const guests    = parseInt(guestsRaw) || 2;
 
   if (!checkin || !checkout) {
     showModal('⚠️ Fechas requeridas', 'Selecciona las fechas de entrada y salida para consultar disponibilidad.');
     return;
   }
 
+  hotelSearchCtx = { city, checkin, checkout, guestsRaw };
+
   const section = document.getElementById('results-section');
   const grid    = document.getElementById('results-grid');
   const title   = document.getElementById('results-title');
 
-  // Mostrar carga inmediata
+  document.getElementById('results-filters').innerHTML = '';
   grid.innerHTML = `
     <div style="grid-column:1/-1;text-align:center;padding:50px 20px;color:#64748b;">
       <div style="font-size:2.5rem;margin-bottom:14px;">🔍</div>
-      <p style="font-weight:600;font-size:1rem;margin:0 0 6px;">Buscando hoteles disponibles en <strong>${city}</strong>…</p>
+      <p style="font-weight:600;font-size:1rem;margin:0 0 6px;">Buscando hoteles en <strong>${city}</strong>…</p>
       <p style="font-size:.85rem;margin:0;">Consultando disponibilidad</p>
     </div>`;
   section.style.display = 'block';
@@ -713,20 +722,16 @@ async function searchHotels() {
   const key      = normalize(city);
   const cityCode = CITY_IATA_HOTEL[key];
   let hotels = [];
-  let source = 'estimated';
 
-  // Intentar Amadeus si hay claves y código de ciudad
   if (cityCode && AMADEUS.clientId !== 'PEGA_TU_CLIENT_ID_AQUI') {
     try {
       const offers = await amadeusHotelSearch(cityCode, checkin, checkout, guests);
       hotels = parseAmadeusHotels(offers, cityCode);
-      source = 'amadeus';
     } catch (e) {
       console.warn('Amadeus hotel falló, usando simulación:', e.message);
     }
   }
 
-  // Fallback: datos simulados en COP
   if (!hotels.length) {
     const simData = hotelData[key] || hotelData['default'];
     hotels = simData.map(h => ({
@@ -735,35 +740,100 @@ async function searchHotels() {
       priceCOP: Math.round(h.price * copRate / 1000) * 1000,
       img:      h.img,
       desc:     h.desc,
-      source:   'estimated',
     }));
   }
+
+  allHotels = hotels;
+  activeStarFilter = 0;
+  activeSortOrder  = 'stars';
 
   let dateStr = '';
   if (checkin)  dateStr += ' · Entrada: ' + formatDate(checkin);
   if (checkout) dateStr += ' · Salida: '  + formatDate(checkout);
-
   title.textContent = `🏨 ${hotels.length} hotel${hotels.length !== 1 ? 'es' : ''} en ${city}${dateStr}`;
-  grid.innerHTML = '';
 
+  renderHotelFilters();
+  renderHotelCards(allHotels);
+}
+
+function renderHotelFilters() {
+  const filtersEl = document.getElementById('results-filters');
+  const starCounts = [3, 4, 5].map(s => ({ s, n: allHotels.filter(h => h.stars === s).length }));
+  filtersEl.innerHTML = `
+    <div class="filter-bar">
+      <span class="filter-label">Estrellas:</span>
+      <div class="filter-chips">
+        <button class="filter-chip active" onclick="filterByStars(0,this)">Todas (${allHotels.length})</button>
+        ${starCounts.map(({s,n}) => n ? `<button class="filter-chip" onclick="filterByStars(${s},this)">${'★'.repeat(s)} (${n})</button>` : '').join('')}
+      </div>
+      <div class="filter-divider"></div>
+      <div class="filter-sort" style="display:flex;align-items:center;gap:8px;">
+        <span class="filter-label">Ordenar:</span>
+        <select onchange="sortHotels(this.value)">
+          <option value="stars">Más valorados</option>
+          <option value="asc">Precio: menor → mayor</option>
+          <option value="desc">Precio: mayor → menor</option>
+        </select>
+      </div>
+    </div>`;
+}
+
+function filterByStars(stars, btn) {
+  activeStarFilter = stars;
+  document.querySelectorAll('#results-filters .filter-chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  applyHotelFilters();
+}
+
+function sortHotels(order) {
+  activeSortOrder = order;
+  applyHotelFilters();
+}
+
+function applyHotelFilters() {
+  let list = activeStarFilter === 0 ? [...allHotels] : allHotels.filter(h => h.stars === activeStarFilter);
+  if (activeSortOrder === 'asc')  list.sort((a,b) => a.priceCOP - b.priceCOP);
+  else if (activeSortOrder === 'desc') list.sort((a,b) => b.priceCOP - a.priceCOP);
+  else list.sort((a,b) => b.stars - a.stars);
+  renderHotelCards(list);
+}
+
+function renderHotelCards(hotels) {
+  const grid = document.getElementById('results-grid');
+  const city = hotelSearchCtx.city || '';
+  grid.innerHTML = '';
+  if (!hotels.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:#64748b;">
+      <p style="font-size:1rem;font-weight:600;">No hay hoteles con ese filtro.</p>
+      <button class="btn btn-outline" style="margin-top:12px;" onclick="filterByStars(0,document.querySelector('.filter-chip'))">Ver todos</button>
+    </div>`;
+    return;
+  }
   hotels.forEach(h => {
-    const stars = '★'.repeat(h.stars) + '☆'.repeat(5 - h.stars);
-    const card  = document.createElement('div');
+    const stars   = '★'.repeat(h.stars) + '☆'.repeat(5 - h.stars);
+    const card    = document.createElement('div');
     card.className = 'result-card';
     const safeName = h.name.replace(/'/g, "\\'");
+    const safeCity = city.replace(/'/g, "\\'");
     card.innerHTML = `
-      <div style="height:170px;background:url('${h.img}') center/cover no-repeat;"></div>
+      <div style="height:170px;background:url('${h.img}') center/cover no-repeat;border-radius:var(--radius) var(--radius) 0 0;"></div>
       <div class="card-body">
-        <div class="stars" style="color:#f59e0b;font-size:.88rem;margin-bottom:4px;">${stars}</div>
+        <div style="color:#f59e0b;font-size:.88rem;margin-bottom:4px;">${stars}</div>
         <h4>${h.name}</h4>
         <p>${h.desc}</p>
         <div class="product-price-row">
-          <div style="font-size:.8rem;color:#64748b;font-weight:600;">Consulta precio con un asesor</div>
-          <button class="btn btn-primary-sm" onclick="openHotelBooking('${safeName}','${city.replace(/'/g,"\\'")}')">Solicitar precio</button>
+          <div style="font-size:.8rem;color:#64748b;font-weight:600;">Consulta precio con asesor</div>
+          <button class="btn btn-primary-sm" onclick="openHotelSearchPrefilled('${safeName}','${safeCity}')">Reservar</button>
         </div>
       </div>`;
     grid.appendChild(card);
   });
+}
+
+function openHotelSearchPrefilled(name, city) {
+  openHotelSearch(name, city);
+  if (hotelSearchCtx.checkin)  document.getElementById('hs-checkin').value  = hotelSearchCtx.checkin;
+  if (hotelSearchCtx.checkout) document.getElementById('hs-checkout').value = hotelSearchCtx.checkout;
 }
 
 // ---------- MODAL RESERVA HOTEL ----------
