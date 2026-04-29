@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgendaTur — Tu agencia de viajes</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER — Edita el logo, colores y links en esta sección
+       ============================================================ -->
+  <header class="header" id="top">
+    <div class="container header-inner">
+
+      <!-- LOGO -->
+      <a href="#" class="logo">
+        <div class="logo-text-wrap">
+          <div class="logo-main"><span class="logo-blue">Agenda</span><span class="logo-orange">tur</span></div>
+          <div class="logo-slogan">Viaja a tu manera</div>
+        </div>
+      </a>
+
+      <!-- NAVEGACIÓN PRINCIPAL -->
+      <nav class="nav" id="nav">
+        <a href="#search" class="nav-link">Vuelos</a>
+        <a href="#hoteles" class="nav-link">Hoteles</a>
+        <a href="#vuelo-hotel" class="nav-link">Vuelo + Hotel</a>
+        <a href="#tours" class="nav-link">Tours</a>
+        <a href="#paquetes" class="nav-link">Paquetes</a>
+        <a href="#autos" class="nav-link">Autos</a>
+        <a href="#contacto" class="nav-link">Contacto</a>
+        <!-- Botones de sesión visibles solo en menú móvil -->
+        <div class="nav-auth-mobile" id="nav-auth-mobile">
+          <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
+          <button class="btn btn-register" onclick="openAuthModal('register')">Registrarse</button>
+        </div>
+      </nav>
+
+      <!-- ACCIONES -->
+      <div class="header-actions">
+        <a href="#" class="header-help">📞 Llámanos</a>
+        <!-- Botones cuando NO hay sesión -->
+        <div id="auth-buttons">
+          <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
+          <button class="btn btn-register" onclick="openAuthModal('register')">Registrarse</button>
+        </div>
+        <!-- Saludo cuando SÍ hay sesión -->
+        <div id="user-greeting" style="display:none;">
+          <div class="user-menu">
+            <div class="user-avatar" id="user-avatar">J</div>
+            <div class="user-info">
+              <span class="user-hello">Hola,</span>
+              <span class="user-name" id="user-name-display">Usuario</span>
+            </div>
+            <div class="user-dropdown">
+              <button class="user-drop-btn" onclick="toggleUserMenu()">▾</button>
+              <div class="user-drop-panel" id="user-drop-panel">
+                <a href="#" class="drop-item">👤 Mi perfil</a>
+                <a href="#" class="drop-item">🧳 Mis viajes</a>
+                <a href="#" class="drop-item">⚙ Configuración</a>
+                <hr class="drop-divider"/>
+                <button class="drop-item drop-logout" onclick="logout()">🚪 Cerrar sesión</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="hamburger" id="hamburger" aria-label="Menú">&#9776;</button>
+      </div>
+    </div>
+
+    <!-- BARRA SECUNDARIA (canales) -->
+    <div class="subheader">
+      <div class="container subheader-inner">
+        <a href="#" class="sub-link active">✈ Vuelos</a>
+        <a href="#hoteles" class="sub-link">🏨 Hoteles</a>
+        <a href="#vuelo-hotel" class="sub-link">✈🏨 Vuelo + Hotel</a>
+        <a href="#tours" class="sub-link">🗺 Tours</a>
+        <a href="#paquetes" class="sub-link">🎒 Paquetes</a>
+        <a href="#autos" class="sub-link">🚗 Autos</a>
+        <a href="#cruceros" class="sub-link">🚢 Cruceros</a>
+        <a href="#seguros" class="sub-link">🛡 Asistencia</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       HERO BANNER + BUSCADOR
+       ============================================================ -->
+  <section class="hero-section" id="search">
+    <div class="hero-bg">
+      <!-- Imagen de fondo del hero — cambia la URL por tu imagen -->
+      <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&auto=format" alt="Avión en vuelo" class="hero-bg-img" />
+      <div class="hero-bg-overlay"></div>
+    </div>
+
+    <div class="container hero-inner">
+      <div class="hero-text">
+        <!-- SLOGAN — edita a tu gusto -->
+        <h1>El mundo es tuyo.<br/>Nosotros te llevamos.</h1>
+        <p>Vuelos, hoteles, tours, paquetes y autos al mejor precio</p>
+      </div>
+
+      <!-- BUSCADOR PRINCIPAL -->
+      <div class="searcher" id="searcher">
+
+        <!-- TABS DEL BUSCADOR (4 canales principales) -->
+        <div class="searcher-tabs">
+          <button class="sr-tab active" data-tab="tab-vuelos">✈ Vuelos</button>
+          <button class="sr-tab" data-tab="tab-hoteles">🏨 Hoteles</button>
+          <button class="sr-tab" data-tab="tab-paquetes">🎒 Paquetes</button>
+          <button class="sr-tab" data-tab="tab-autos">🚗 Autos</button>
+        </div>
+
+        <!-- ---- TAB: VUELOS (conectado a Kayak) ---- -->
+        <div class="sr-panel active" id="tab-vuelos">
+          <div class="trip-type-row">
+            <label class="radio-label"><input type="radio" name="trip" value="roundtrip" checked onchange="toggleReturnDate(this)" /> Ida y vuelta</label>
+            <label class="radio-label"><input type="radio" name="trip" value="oneway" onchange="toggleReturnDate(this)" /> Solo ida</label>
+          </div>
+          <div class="sr-fields">
+
+            <!-- ORIGEN -->
+            <div class="sr-field sr-field-lg" style="position:relative;">
+              <label>Origen</label>
+              <input type="text" id="v-origin" placeholder="Ej: Bogotá, Miami, Madrid…"
+                     autocomplete="off" oninput="flightAC(this,'ac-origin')" />
+              <ul class="autocomplete-list" id="ac-origin"></ul>
+              <input type="hidden" id="v-origin-code" />
+            </div>
+
+            <!-- BOTÓN INTERCAMBIAR -->
+            <button class="swap-btn" title="Intercambiar" onclick="swapAirports()">⇆</button>
+
+            <!-- DESTINO -->
+            <div class="sr-field sr-field-lg" style="position:relative;">
+              <label>Destino</label>
+              <input type="text" id="v-dest" placeholder="Ej: Cancún, París, Tokio…"
+                     autocomplete="off" oninput="flightAC(this,'ac-dest')" />
+              <ul class="autocomplete-list" id="ac-dest"></ul>
+              <input type="hidden" id="v-dest-code" />
+            </div>
+
+            <!-- FECHA IDA -->
+            <div class="sr-field sr-field-sm">
+              <label>Salida</label>
+              <input type="date" id="vuelo-salida" />
+            </div>
+
+            <!-- FECHA VUELTA -->
+            <div class="sr-field sr-field-sm" id="return-date-field">
+              <label>Regreso</label>
+              <input type="date" id="vuelo-regreso" />
+            </div>
+
+            <!-- PASAJEROS -->
+            <div class="sr-field sr-field-xs">
+              <label>Adultos</label>
+              <select id="v-adults">
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+
+            <!-- CABINA -->
+            <div class="sr-field sr-field-xs">
+              <label>Cabina</label>
+              <select id="v-cabin">
+                <option value="e">Económica</option>
+                <option value="b">Business</option>
+                <option value="f">Primera clase</option>
+              </select>
+            </div>
+
+            <button class="btn btn-search-main" onclick="searchFlights()">Buscar vuelos</button>
+          </div>
+        </div>
+
+        <!-- ---- TAB: HOTELES ---- -->
+        <div class="sr-panel" id="tab-hoteles">
+          <div class="sr-fields">
+            <div class="sr-field sr-field-lg" style="position:relative;">
+              <label>Destino (ciudad a nivel mundial)</label>
+              <input type="text" id="hotel-city" placeholder="Ej: París, Cancún, Tokio, Dubai…" autocomplete="off" />
+              <ul class="autocomplete-list" id="hotel-autocomplete"></ul>
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Check-in</label>
+              <input type="date" id="hotel-checkin" />
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Check-out</label>
+              <input type="date" id="hotel-checkout" />
+            </div>
+            <div class="sr-field sr-field-xs">
+              <label>Habitaciones</label>
+              <select>
+                <option>1 hab.</option>
+                <option>2 hab.</option>
+                <option>3 hab.</option>
+              </select>
+            </div>
+            <div class="sr-field sr-field-xs">
+              <label>Huéspedes</label>
+              <select id="hotel-guests">
+                <option>1 adulto</option>
+                <option>2 adultos</option>
+                <option>2 adultos, 1 niño</option>
+                <option>2 adultos, 2 niños</option>
+              </select>
+            </div>
+            <button class="btn btn-search-main" onclick="searchHotels()">Buscar hoteles</button>
+          </div>
+        </div>
+
+        <!-- ---- TAB: PAQUETES ---- -->
+        <div class="sr-panel" id="tab-paquetes">
+          <div class="sr-fields">
+            <div class="sr-field">
+              <label>Origen</label>
+              <input type="text" placeholder="Ciudad de salida" />
+            </div>
+            <div class="sr-field sr-field-lg">
+              <label>Destino del paquete</label>
+              <input type="text" placeholder="País o ciudad destino" />
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Fecha de salida</label>
+              <input type="date" />
+            </div>
+            <div class="sr-field sr-field-xs">
+              <label>Duración</label>
+              <select>
+                <option>5-7 noches</option>
+                <option>8-10 noches</option>
+                <option>11-14 noches</option>
+                <option>+15 noches</option>
+              </select>
+            </div>
+            <div class="sr-field sr-field-xs">
+              <label>Personas</label>
+              <select>
+                <option>2 adultos</option>
+                <option>1 adulto</option>
+                <option>2 adultos, 1 niño</option>
+                <option>Grupo</option>
+              </select>
+            </div>
+            <button class="btn btn-search-main" onclick="showComingSoon()">Ver paquetes</button>
+          </div>
+        </div>
+
+        <!-- ---- TAB: AUTOS ---- -->
+        <div class="sr-panel" id="tab-autos">
+          <div class="sr-fields">
+            <div class="sr-field sr-field-lg">
+              <label>Lugar de recogida</label>
+              <input type="text" placeholder="Ciudad o aeropuerto" />
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Fecha recogida</label>
+              <input type="date" />
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Hora recogida</label>
+              <input type="time" value="10:00" />
+            </div>
+            <div class="sr-field sr-field-sm">
+              <label>Fecha devolución</label>
+              <input type="date" />
+            </div>
+            <div class="sr-field sr-field-xs">
+              <label>Tipo de auto</label>
+              <select>
+                <option>Todos</option>
+                <option>Económico</option>
+                <option>Compacto</option>
+                <option>SUV</option>
+                <option>Lujo</option>
+                <option>Minivan</option>
+              </select>
+            </div>
+            <button class="btn btn-search-main" onclick="showComingSoon()">Buscar autos</button>
+          </div>
+        </div>
+
+      </div><!-- /searcher -->
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RESULTADOS DE VUELOS (dentro de la página)
+       ============================================================ -->
+  <section id="flight-results-section" style="display:none;">
+    <div class="fr-header">
+      <div class="container fr-header-inner">
+        <div class="fr-route-info">
+          <span id="fr-origin-city"></span>
+          <span class="fr-arrow">→</span>
+          <span id="fr-dest-city"></span>
+          <span class="fr-date-badge" id="fr-date-badge"></span>
+          <span class="fr-pax-badge" id="fr-pax-badge"></span>
+        </div>
+        <button class="btn btn-outline-sm" onclick="closeFlightResults()">✕ Cerrar</button>
+      </div>
+    </div>
+
+    <div class="container fr-body">
+      <!-- FILTROS -->
+      <div class="fr-filters">
+        <button class="fr-filter active" onclick="filterFlights('all',this)">Todos</button>
+        <button class="fr-filter" onclick="filterFlights('direct',this)">Directo</button>
+        <button class="fr-filter" onclick="filterFlights('1stop',this)">1 escala</button>
+        <div class="fr-sort">
+          <label>Ordenar:</label>
+          <select onchange="sortFlights(this.value)">
+            <option value="price">Menor precio</option>
+            <option value="duration">Menor duración</option>
+            <option value="departure">Hora de salida</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- LISTA DE RESULTADOS -->
+      <div id="fr-list"></div>
+
+      <!-- AVISO ASESOR -->
+      <div class="fr-kayak-cta">
+        <p>¿Necesitas ayuda para elegir tu vuelo? Nuestros asesores están disponibles.</p>
+        <a href="https://wa.me/573102276645?text=Hola%2C%20necesito%20ayuda%20para%20reservar%20un%20vuelo" target="_blank" rel="noopener" class="btn btn-primary">
+          💬 Hablar con un asesor
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RESULTADOS DE HOTELES (visible solo al buscar)
+       ============================================================ -->
+  <section class="results-section" id="results-section" style="display:none;">
+    <div class="container">
+      <div class="results-header">
+        <h2 id="results-title">Hoteles encontrados</h2>
+        <button class="btn btn-outline-sm" onclick="closeResults()">✕ Cerrar</button>
+      </div>
+      <div class="results-grid" id="results-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       BANNER PROMOCIONAL
+       ============================================================ -->
+  <section class="promo-banner">
+    <div class="container">
+      <div class="promo-grid">
+        <div class="promo-card promo-card-blue">
+          <div class="promo-icon">✈</div>
+          <div>
+            <h4>Precios exclusivos en vuelos</h4>
+            <p>Compara más de 300 aerolíneas y ahorra hasta 40%</p>
+          </div>
+          <button class="btn btn-white-sm" onclick="document.getElementById('tab-vuelos').scrollIntoView({behavior:'smooth'})">Ver ofertas</button>
+        </div>
+        <div class="promo-card promo-card-orange">
+          <div class="promo-icon">🎁</div>
+          <div>
+            <h4>Tarjetas regalo AgendaTur</h4>
+            <p>El mejor regalo para los viajeros de tu vida</p>
+          </div>
+          <button class="btn btn-white-sm" onclick="showComingSoon()">Regalar viaje</button>
+        </div>
+        <div class="promo-card promo-card-green">
+          <div class="promo-icon">🛡</div>
+          <div>
+            <h4>Asistencia al viajero</h4>
+            <p>Cobertura médica y de equipaje en todo el mundo</p>
+          </div>
+          <button class="btn btn-white-sm" onclick="showComingSoon()">Ver planes</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4 CANALES PRINCIPALES
+       ============================================================ -->
+  <section class="section channels-section" id="canales">
+    <div class="container">
+      <h2 class="section-title">Nuestros 4 canales de viaje</h2>
+      <p class="section-sub">Todo lo que necesitas para planificar tu viaje perfecto</p>
+      <div class="channels-grid">
+
+        <a href="#hoteles" class="ch-card">
+          <div class="ch-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500')">
+            <div class="ch-overlay"></div>
+            <div class="ch-content">
+              <span class="ch-icon-big">🏨</span>
+              <h3>Hoteles</h3>
+              <p>+500 000 hoteles en todo el mundo</p>
+              <span class="ch-cta">Buscar hoteles →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#vuelos" class="ch-card">
+          <div class="ch-img" style="background-image:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=500')">
+            <div class="ch-overlay"></div>
+            <div class="ch-content">
+              <span class="ch-icon-big">✈</span>
+              <h3>Vuelos</h3>
+              <p>+300 aerolíneas con los mejores precios</p>
+              <span class="ch-cta">Buscar vuelos →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#paquetes" class="ch-card">
+          <div class="ch-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=500')">
+            <div class="ch-overlay"></div>
+            <div class="ch-content">
+              <span class="ch-icon-big">🎒</span>
+              <h3>Paquetes Todo Incluido</h3>
+              <p>Vuelo + Hotel + Tour en un solo precio</p>
+              <span class="ch-cta">Ver paquetes →</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#autos" class="ch-card">
+          <div class="ch-img" style="background-image:url('https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=500')">
+            <div class="ch-overlay"></div>
+            <div class="ch-content">
+              <span class="ch-icon-big">🚗</span>
+              <h3>Renta de Autos</h3>
+              <p>+10 000 ubicaciones en 180 países</p>
+              <span class="ch-cta">Rentar auto →</span>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       DESTINOS DESTACADOS
+       ============================================================ -->
+  <section class="section bg-light" id="destinos">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <h2 class="section-title left">Destinos imperdibles</h2>
+          <p class="section-sub left">Los más reservados por nuestros viajeros este mes</p>
+        </div>
+        <button class="btn btn-outline" onclick="showComingSoon()">Ver todos →</button>
+      </div>
+      <div class="dest-scroll">
+        <div class="dest-card-new" onclick="fillHotelSearch('París')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=400')"></div>
+          <div class="dest-info"><h4>París</h4><span>Francia</span><span class="dest-price">Desde $189/noche</span></div>
+        </div>
+        <div class="dest-card-new" onclick="fillHotelSearch('Cancún')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=400')"></div>
+          <div class="dest-info"><h4>Cancún</h4><span>México</span><span class="dest-price">Desde $245/noche</span></div>
+        </div>
+        <div class="dest-card-new" onclick="fillHotelSearch('Dubái')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=400')"></div>
+          <div class="dest-info"><h4>Dubái</h4><span>Emiratos Árabes</span><span class="dest-price">Desde $260/noche</span></div>
+        </div>
+        <div class="dest-card-new" onclick="fillHotelSearch('Nueva York')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=400')"></div>
+          <div class="dest-info"><h4>Nueva York</h4><span>Estados Unidos</span><span class="dest-price">Desde $245/noche</span></div>
+        </div>
+        <div class="dest-card-new" onclick="fillHotelSearch('Tokio')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?w=400')"></div>
+          <div class="dest-info"><h4>Tokio</h4><span>Japón</span><span class="dest-price">Desde $160/noche</span></div>
+        </div>
+        <div class="dest-card-new" onclick="fillHotelSearch('Santorini')">
+          <div class="dest-img" style="background-image:url('https://images.unsplash.com/photo-1542293787938-c9e299b880cc?w=400')"></div>
+          <div class="dest-info"><h4>Santorini</h4><span>Grecia</span><span class="dest-price">Desde $210/noche</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOTELES DESTACADOS
+       ============================================================ -->
+  <section class="section" id="hoteles">
+    <div class="container">
+      <div class="section-header-row">
+        <div>
+          <h2 class="section-title left">Hoteles destacados</h2>
+          <p class="section-sub left">Selección curada por nuestros expertos</p>
+        </div>
+        <button class="btn btn-outline" onclick="scrollToSearch('tab-hoteles')">Ver más →</button>
+      </div>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500')">
+            <span class="product-badge">⭐ Destacado</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 París, Francia</div>
+            <h4>Hotel Le Grand Palais</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(1,248 opiniones)</span></div>
+            <p>A pasos de la Torre Eiffel con vistas panorámicas y desayuno incluido.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$189</span><small>/noche</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Hotel Le Grand Palais')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=500')">
+            <span class="product-badge badge-orange">🔥 Todo incluido</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Cancún, México</div>
+            <h4>Resort Caribe Sol</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(3,501 opiniones)</span></div>
+            <p>Todo incluido frente al mar Caribe, piscinas infinity y spa de lujo.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$245</span><small>/noche</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Resort Caribe Sol')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=500')">
+            <span class="product-badge badge-gold">👑 Premium</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Dubái, EAU</div>
+            <h4>Burj Al Arab Suites</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(890 opiniones)</span></div>
+            <p>El hotel más icónico del mundo con servicio de mayordomo 24/7.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$890</span><small>/noche</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Burj Al Arab')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=500')">
+            <span class="product-badge">🗽 Ciudad</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Nueva York, EE.UU.</div>
+            <h4>The Manhattan View</h4>
+            <div class="stars-row"><span class="stars">★★★★</span><span class="reviews">(2,100 opiniones)</span></div>
+            <p>En el corazón de Manhattan, cerca de Times Square y Broadway.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$320</span><small>/noche</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('The Manhattan View')">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VUELOS POPULARES
+       ============================================================ -->
+  <section class="section bg-light" id="vuelos">
+    <div class="container">
+      <h2 class="section-title">Vuelos con mejores precios</h2>
+      <p class="section-sub">Rutas más buscadas esta semana · Precios desde por tramo</p>
+      <div class="flights-grid">
+        <div class="flight-card-new">
+          <div class="flight-dest-img" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=300')"></div>
+          <div class="flight-details">
+            <div class="flight-route-new"><span>Bogotá</span><span class="arrow">→</span><span>Miami</span></div>
+            <div class="flight-meta"><span>⏱ 3h 20m</span><span>🗓 Diario</span></div>
+            <div class="flight-price-new"><span class="from">desde</span><span class="fprice">$198</span><small>ida y vuelta</small></div>
+            <button class="btn btn-primary-sm mt-sm" onclick="showComingSoon()">Ver vuelos</button>
+          </div>
+        </div>
+        <div class="flight-card-new">
+          <div class="flight-dest-img" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=300')"></div>
+          <div class="flight-details">
+            <div class="flight-route-new"><span>Lima</span><span class="arrow">→</span><span>Madrid</span></div>
+            <div class="flight-meta"><span>⏱ 12h 45m</span><span>🗓 3×semana</span></div>
+            <div class="flight-price-new"><span class="from">desde</span><span class="fprice">$650</span><small>ida y vuelta</small></div>
+            <button class="btn btn-primary-sm mt-sm" onclick="showComingSoon()">Ver vuelos</button>
+          </div>
+        </div>
+        <div class="flight-card-new">
+          <div class="flight-dest-img" style="background-image:url('https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?w=300')"></div>
+          <div class="flight-details">
+            <div class="flight-route-new"><span>Ciudad de México</span><span class="arrow">→</span><span>Tokio</span></div>
+            <div class="flight-meta"><span>⏱ 16h</span><span>🗓 Diario</span></div>
+            <div class="flight-price-new"><span class="from">desde</span><span class="fprice">$890</span><small>ida y vuelta</small></div>
+            <button class="btn btn-primary-sm mt-sm" onclick="showComingSoon()">Ver vuelos</button>
+          </div>
+        </div>
+        <div class="flight-card-new">
+          <div class="flight-dest-img" style="background-image:url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=300')"></div>
+          <div class="flight-details">
+            <div class="flight-route-new"><span>Buenos Aires</span><span class="arrow">→</span><span>Roma</span></div>
+            <div class="flight-meta"><span>⏱ 14h 30m</span><span>🗓 Diario</span></div>
+            <div class="flight-price-new"><span class="from">desde</span><span class="fprice">$720</span><small>ida y vuelta</small></div>
+            <button class="btn btn-primary-sm mt-sm" onclick="showComingSoon()">Ver vuelos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PAQUETES TODO INCLUIDO
+       ============================================================ -->
+  <section class="section" id="paquetes">
+    <div class="container">
+      <h2 class="section-title">Paquetes Todo Incluido</h2>
+      <p class="section-sub">Vuelo + Hotel + Tour con precio garantizado</p>
+      <div class="packages-grid">
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600')">
+            <span class="pkg-tag">⭐ Más vendido</span>
+            <span class="pkg-discount">-32%</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">🌎 <strong>Punta Cana</strong> · Rep. Dominicana</div>
+            <h3>Caribe Total</h3>
+            <ul class="pkg-inc">
+              <li>✈ Vuelo ida y vuelta incluido</li>
+              <li>🏨 7 noches todo incluido</li>
+              <li>🤿 Excursión de snorkel</li>
+              <li>🚌 Traslados aeropuerto</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="old-price">$1 890</span><span class="pkg-price">$1 290</span><small>/persona</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Caribe Total')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=600')">
+            <span class="pkg-tag pkg-tag-blue">🏙 City Break</span>
+            <span class="pkg-discount">-27%</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">🌍 <strong>París</strong> · Francia</div>
+            <h3>Romance en París</h3>
+            <ul class="pkg-inc">
+              <li>✈ Vuelo ida y vuelta incluido</li>
+              <li>🏨 5 noches hotel 4★</li>
+              <li>🗼 City tour &amp; Torre Eiffel</li>
+              <li>🍷 Cena romántica incluida</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="old-price">$2 450</span><span class="pkg-price">$1 780</span><small>/pareja</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Romance en París')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600')">
+            <span class="pkg-tag pkg-tag-green">🌿 Aventura</span>
+            <span class="pkg-discount">-28%</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">🌎 <strong>Arenal</strong> · Costa Rica</div>
+            <h3>Costa Rica Extremo</h3>
+            <ul class="pkg-inc">
+              <li>✈ Vuelo ida y vuelta incluido</li>
+              <li>🏨 6 noches eco-lodge</li>
+              <li>🌋 Volcán Arenal + aguas termales</li>
+              <li>🦜 Tour canopy y zip-line</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="old-price">$1 600</span><span class="pkg-price">$1 150</span><small>/persona</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Costa Rica Extremo')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TOURS
+       ============================================================ -->
+  <section class="section bg-light" id="tours">
+    <div class="container">
+      <h2 class="section-title">Tours &amp; Experiencias</h2>
+      <p class="section-sub">Aventuras únicas guiadas por expertos locales</p>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1526392060635-9d6019884377?w=500')">
+            <span class="product-badge badge-green">3 días</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Cusco, Perú</div>
+            <h4>Machu Picchu &amp; Valle Sagrado</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(2,340 opiniones)</span></div>
+            <p>Ciudadela inca, Valle Sagrado y tren hacia Aguas Calientes.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$420</span><small>/persona</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Machu Picchu')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?w=500')">
+            <span class="product-badge badge-green">5 días</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Florencia, Italia</div>
+            <h4>Toscana y Cinque Terre</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(1,890 opiniones)</span></div>
+            <p>Catas de vino, ciudades medievales y la costa italiana.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$780</span><small>/persona</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Toscana')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?w=500')">
+            <span class="product-badge badge-green">7 días</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Masái Mara, Kenia</div>
+            <h4>Safari en Kenia</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(678 opiniones)</span></div>
+            <p>Big Five, lago Nakuru y Amboseli en lodge de lujo.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$2 100</span><small>/persona</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Safari Kenia')">Reservar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img" style="background-image:url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500')">
+            <span class="product-badge badge-green">4 días</span>
+          </div>
+          <div class="product-body">
+            <div class="product-loc">📍 Kyoto, Japón</div>
+            <h4>Kyoto &amp; Osaka Cultural</h4>
+            <div class="stars-row"><span class="stars">★★★★★</span><span class="reviews">(1,120 opiniones)</span></div>
+            <p>Templos zen, geishas y la gastronomía callejera de Osaka.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$960</span><small>/persona</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Kyoto Osaka')">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       RENTA DE AUTOS
+       ============================================================ -->
+  <section class="section" id="autos">
+    <div class="container">
+      <h2 class="section-title">Renta de Autos</h2>
+      <p class="section-sub">Flota disponible en más de 180 países y 10 000 ubicaciones</p>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-img car-product-img" style="background-image:url('https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?w=500')">
+            <span class="product-badge badge-orange">Económico</span>
+          </div>
+          <div class="product-body">
+            <h4>Toyota Yaris o similar</h4>
+            <div class="car-specs"><span>👥 5</span><span>🧳 2 maletas</span><span>⚙ Auto.</span><span>❄ A/C</span></div>
+            <p>Bajo consumo, ideal para ciudad y fácil aparcamiento.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$28</span><small>/día</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Toyota Yaris')">Rentar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img car-product-img" style="background-image:url('https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=500')">
+            <span class="product-badge badge-orange">SUV</span>
+          </div>
+          <div class="product-body">
+            <h4>Toyota RAV4 o similar</h4>
+            <div class="car-specs"><span>👥 5</span><span>🧳 4 maletas</span><span>⚙ 4×4</span><span>❄ A/C</span></div>
+            <p>Ideal para rutas de aventura, montaña y familias.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$65</span><small>/día</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Toyota RAV4')">Rentar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img car-product-img" style="background-image:url('https://images.unsplash.com/photo-1563720223185-11003d516935?w=500')">
+            <span class="product-badge badge-orange">Lujo</span>
+          </div>
+          <div class="product-body">
+            <h4>BMW Serie 5 o similar</h4>
+            <div class="car-specs"><span>👥 5</span><span>🧳 3 maletas</span><span>⚙ Auto.</span><span>🔑 Premium</span></div>
+            <p>Viajes ejecutivos con confort y estilo incomparables.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$145</span><small>/día</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('BMW Serie 5')">Rentar</button>
+            </div>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-img car-product-img" style="background-image:url('https://images.unsplash.com/photo-1609521263047-f8f205293f24?w=500')">
+            <span class="product-badge badge-orange">Minivan</span>
+          </div>
+          <div class="product-body">
+            <h4>Chrysler Pacifica o similar</h4>
+            <div class="car-specs"><span>👥 8</span><span>🧳 6 maletas</span><span>⚙ Auto.</span><span>❄ A/C</span></div>
+            <p>La mejor opción para grupos grandes y familias numerosas.</p>
+            <div class="product-price-row">
+              <div><small>Desde</small><span class="product-price">$95</span><small>/día</small></div>
+              <button class="btn btn-primary-sm" onclick="bookItem('Chrysler Pacifica')">Rentar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       POR QUÉ ELEGIRNOS
+       ============================================================ -->
+  <section class="why-section">
+    <div class="container">
+      <h2 class="section-title white">¿Por qué elegir AgendaTur?</h2>
+      <div class="why-grid">
+        <div class="why-item"><div class="why-icon">🌍</div><h4>Cobertura mundial</h4><p>+190 países con soporte local en español.</p></div>
+        <div class="why-item"><div class="why-icon">💰</div><h4>Mejor precio garantizado</h4><p>Si encuentras uno menor, te igualamos la diferencia.</p></div>
+        <div class="why-item"><div class="why-icon">🔒</div><h4>Pago 100% seguro</h4><p>Encriptación SSL y política de cancelación flexible.</p></div>
+        <div class="why-item"><div class="why-icon">📞</div><h4>Soporte 24/7</h4><p>Asesores en español todos los días del año.</p></div>
+        <div class="why-item"><div class="why-icon">🏅</div><h4>15 años de experiencia</h4><p>Más de 500 000 viajeros satisfechos.</p></div>
+        <div class="why-item"><div class="why-icon">✈</div><h4>+300 aerolíneas</h4><p>Los mejores precios en todas las rutas del mundo.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SECCIÓN VUELO + HOTEL (canal especial)
+       ============================================================ -->
+  <section class="section bg-light" id="vuelo-hotel">
+    <div class="container">
+      <div class="combo-section">
+        <div class="combo-text">
+          <h2>Vuelo + Hotel <span class="highlight">= Más ahorro</span></h2>
+          <p>Al reservar vuelo y hotel juntos obtienes descuentos exclusivos que no encontrarás por separado. Nuestros asesores te arman el paquete ideal según tu presupuesto y destino.</p>
+          <ul class="combo-benefits">
+            <li>✅ Hasta 35% de ahorro vs. reservar por separado</li>
+            <li>✅ Más de 500 000 combinaciones disponibles</li>
+            <li>✅ Sin cargos por cambios en las primeras 24h</li>
+            <li>✅ Asistencia personalizada de inicio a fin</li>
+          </ul>
+          <button class="btn btn-primary" onclick="scrollToSearch('tab-paquetes')">Armar mi viaje →</button>
+        </div>
+        <div class="combo-img">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&auto=format" alt="Playa paradisíaca" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       CONTACTO
+       ============================================================ -->
+  <section class="section" id="contacto">
+    <div class="container contact-layout">
+      <div class="contact-left">
+        <h2 class="section-title left">¿Listo para tu próximo viaje?</h2>
+        <p>Nuestros asesores expertos están disponibles para ayudarte a planificar la experiencia perfecta.</p>
+        <div class="contact-cards">
+          <div class="contact-card">
+            <span class="cc-icon">📞</span>
+            <div><strong>Teléfono / WhatsApp</strong><p>+57 310 227 6645</p></div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">📧</span>
+            <div><strong>Email</strong><p>viajes@agendatur.onmicrosoft.com</p></div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">
+              <svg viewBox="0 0 32 32" style="width:28px;height:28px;fill:#25d366;" xmlns="http://www.w3.org/2000/svg">
+                <path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.2-2.1C10.7 30.7 13.3 31.4 16 31.4c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.5c-2.5 0-4.9-.7-7-1.9l-.5-.3-5 1.3 1.3-4.8-.3-.5C3.2 21 2.5 18.5 2.5 16 2.5 8.6 8.6 2.5 16 2.5S29.5 8.6 29.5 16 23.4 28.9 16 28.9zm8.5-10.7c-.5-.2-2.8-1.4-3.2-1.5-.4-.2-.7-.2-1 .2-.3.4-1.2 1.5-1.4 1.8-.3.3-.5.3-1 .1-2.7-1.3-4.5-2.4-6.3-5.4-.5-.8.5-.7 1.4-2.4.2-.3.1-.6 0-.8-.1-.2-1-2.5-1.4-3.4-.4-.9-.7-.8-1-.8h-.8c-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8s1.7 4.4 1.9 4.7c.2.3 3.3 5.1 8 7.1 3 1.2 4.1 1.3 5.6 1.1.9-.1 2.8-1.1 3.2-2.2.4-1.1.4-2 .3-2.2-.2-.3-.5-.4-1-.6z"/>
+              </svg>
+            </span>
+            <div><strong>WhatsApp</strong><a href="https://wa.me/573102276645?text=Hola%2C%20me%20interesa%20un%20viaje" target="_blank" rel="noopener" style="font-size:.82rem;color:#25d366;font-weight:600;">Escribirnos ahora →</a></div>
+          </div>
+          <div class="contact-card">
+            <span class="cc-icon">🖥️</span>
+            <div>
+              <strong>Atención virtual</strong>
+              <p style="font-size:.8rem;line-height:1.5;">No contamos con oficina física. Nos reunimos contigo vía <strong>Google Meet</strong> según tu solicitud, con los más altos estándares de seguridad y atención personalizada.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form" onsubmit="submitContact(event)">
+        <h3>Envíanos un mensaje</h3>
+        <div class="form-row">
+          <input type="text" placeholder="Nombre completo" required />
+          <input type="email" placeholder="Correo electrónico" required />
+        </div>
+        <div class="form-row">
+          <input type="tel" placeholder="Teléfono (opcional)" />
+          <select>
+            <option value="">Servicio de interés</option>
+            <option>Hoteles</option>
+            <option>Vuelos</option>
+            <option>Tours</option>
+            <option>Paquetes todo incluido</option>
+            <option>Renta de autos</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <select>
+            <option value="">¿Cómo prefieres que nos reunamos?</option>
+            <option>Google Meet (videollamada)</option>
+            <option>Llamada telefónica</option>
+            <option>WhatsApp</option>
+          </select>
+          <input type="date" title="¿Qué día te queda bien?" />
+        </div>
+        <div class="form-row">
+          <select>
+            <option value="">¿A qué hora? (zona horaria Colombia)</option>
+            <option>8:00 AM</option>
+            <option>9:00 AM</option>
+            <option>10:00 AM</option>
+            <option>11:00 AM</option>
+            <option>12:00 PM</option>
+            <option>2:00 PM</option>
+            <option>3:00 PM</option>
+            <option>4:00 PM</option>
+            <option>5:00 PM</option>
+            <option>6:00 PM</option>
+            <option>7:00 PM</option>
+          </select>
+          <input type="text" placeholder="Ciudad / País desde donde escribes" />
+        </div>
+        <textarea rows="4" placeholder="Cuéntanos sobre tu viaje soñado…"></textarea>
+        <button type="submit" class="btn btn-primary full-width">Enviar consulta ✈</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <!-- LOGO FOOTER — edita igual que el header -->
+        <div class="footer-logo-text">
+          <div class="logo-main"><span class="logo-blue-f">Agenda</span><span class="logo-orange-f">tur</span></div>
+          <div class="logo-slogan-f">Viaja a tu manera</div>
+        </div>
+        <p>Tu agencia de viajes de confianza. Más de 15 años llevando viajeros a sus destinos soñados.</p>
+        <div class="social-row">
+          <a href="#" class="social-btn">f</a>
+          <a href="#" class="social-btn">in</a>
+          <a href="#" class="social-btn">tw</a>
+          <a href="#" class="social-btn">ig</a>
+          <a href="#" class="social-btn">yt</a>
+        </div>
+        <div class="certifications">
+          <span class="cert">IATA</span>
+          <span class="cert">ISO 9001</span>
+          <span class="cert">🔒 SSL Secure</span>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h5>Servicios</h5>
+        <ul>
+          <li><a href="#search">Vuelos</a></li>
+          <li><a href="#hoteles">Hoteles</a></li>
+          <li><a href="#tours">Tours</a></li>
+          <li><a href="#paquetes">Paquetes</a></li>
+          <li><a href="#autos">Renta de Autos</a></li>
+          <li><a href="#cruceros">Cruceros</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Destinos</h5>
+        <ul>
+          <li><a href="#">Europa</a></li>
+          <li><a href="#">Asia</a></li>
+          <li><a href="#">América</a></li>
+          <li><a href="#">Caribe</a></li>
+          <li><a href="#">Oceanía</a></li>
+          <li><a href="#">África</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Información</h5>
+        <ul>
+          <li><a href="#">Sobre nosotros</a></li>
+          <li><a href="#">Blog de viajes</a></li>
+          <li><a href="#">Trabaja con nosotros</a></li>
+          <li><a href="#">Términos y condiciones</a></li>
+          <li><a href="#">Política de privacidad</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h5>Pago seguro</h5>
+        <div class="payment-icons">
+          <span class="pay-icon">VISA</span>
+          <span class="pay-icon">MC</span>
+          <span class="pay-icon">AMEX</span>
+          <span class="pay-icon">PayPal</span>
+        </div>
+        <h5 style="margin-top:20px;">Descarga la App</h5>
+        <div class="app-btns">
+          <button class="app-btn" onclick="showComingSoon()">🍎 App Store</button>
+          <button class="app-btn" onclick="showComingSoon()">▶ Google Play</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container footer-bottom-inner">
+        <p>&copy; 2026 AgendaTur. Todos los derechos reservados.</p>
+        <p><a href="#">Términos</a> · <a href="#">Privacidad</a> · <a href="#">Cookies</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============================================================
+       MODAL
+       ============================================================ -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <h3 id="modal-title"></h3>
+      <p id="modal-msg"></p>
+      <button class="btn btn-primary" onclick="closeModal()">Aceptar</button>
+    </div>
+  </div>
+
+  <!-- OVERLAY BUSCANDO VUELOS -->
+  <div class="flight-searching-overlay" id="flight-overlay">
+    <div class="flight-searching-box">
+      <div class="plane-anim">✈</div>
+      <h3>Buscando los mejores vuelos…</h3>
+      <p id="flight-overlay-route"></p>
+      <div class="search-progress"><div class="search-bar"></div></div>
+      <small>Te redirigimos a los resultados en Kayak</small>
+    </div>
+  </div>
+
+  <!-- BOTÓN VOLVER ARRIBA -->
+  <button class="back-to-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Volver arriba">↑</button>
+
+  <!-- ============================================================
+       BOTÓN FLOTANTE WHATSAPP
+       Cambia el número en el href: https://wa.me/TUNUMERO
+       Incluye código de país sin + ni espacios.
+       Ejemplo Colombia: 573001234567
+       ============================================================ -->
+  <a class="whatsapp-float"
+     href="https://wa.me/573102276645?text=Hola%2C%20me%20interesa%20obtener%20informaci%C3%B3n%20sobre%20un%20viaje"
+     target="_blank"
+     rel="noopener noreferrer"
+     title="Chatea con nosotros por WhatsApp">
+    <svg class="wa-icon" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 .4C7.4.4.4 7.4.4 16c0 2.8.7 5.4 2 7.7L.4 31.6l8.2-2.1C10.7 30.7 13.3 31.4 16 31.4c8.6 0 15.6-7 15.6-15.6S24.6.4 16 .4zm0 28.5c-2.5 0-4.9-.7-7-1.9l-.5-.3-5 1.3 1.3-4.8-.3-.5C3.2 21 2.5 18.5 2.5 16 2.5 8.6 8.6 2.5 16 2.5S29.5 8.6 29.5 16 23.4 28.9 16 28.9zm8.5-10.7c-.5-.2-2.8-1.4-3.2-1.5-.4-.2-.7-.2-1 .2-.3.4-1.2 1.5-1.4 1.8-.3.3-.5.3-1 .1-2.7-1.3-4.5-2.4-6.3-5.4-.5-.8.5-.7 1.4-2.4.2-.3.1-.6 0-.8-.1-.2-1-2.5-1.4-3.4-.4-.9-.7-.8-1-.8h-.8c-.3 0-.8.1-1.2.6-.4.5-1.6 1.6-1.6 3.8s1.7 4.4 1.9 4.7c.2.3 3.3 5.1 8 7.1 3 1.2 4.1 1.3 5.6 1.1.9-.1 2.8-1.1 3.2-2.2.4-1.1.4-2 .3-2.2-.2-.3-.5-.4-1-.6z"/>
+    </svg>
+    <span class="wa-label">WhatsApp</span>
+  </a>
+
+  <!-- ============================================================
+       MODAL INICIAR SESIÓN
+       ============================================================ -->
+  <div class="auth-overlay" id="modal-login">
+    <div class="auth-box">
+      <button class="auth-close" onclick="closeAuthModal('login')">✕</button>
+      <div class="auth-header">
+        <div class="auth-logo"><span class="logo-blue">Agenda</span><span class="logo-orange">tur</span></div>
+        <h2>Iniciar sesión</h2>
+        <p>Bienvenido de vuelta. Ingresa tus datos.</p>
+      </div>
+      <form class="auth-form" onsubmit="submitLogin(event)">
+        <div class="auth-field">
+          <label>Correo electrónico</label>
+          <input type="email" id="login-email" placeholder="tucorreo@ejemplo.com" required
+                 oninput="checkLoginEmail(this.value)" />
+        </div>
+        <!-- Campo nombre: aparece solo si el correo no está registrado en este dispositivo -->
+        <div class="auth-field" id="login-name-field" style="display:none;">
+          <label>Tu nombre completo</label>
+          <input type="text" id="login-name" placeholder="Juan García" />
+          <small style="color:#64748b;font-size:.75rem;">Primera vez en este dispositivo — ingresa tu nombre</small>
+        </div>
+        <div class="auth-field">
+          <label>Contraseña</label>
+          <div class="pass-wrap">
+            <input type="password" id="login-pass" placeholder="Tu contraseña" required />
+            <button type="button" class="eye-btn" onclick="togglePass('login-pass', this)">👁</button>
+          </div>
+        </div>
+        <div class="auth-options">
+          <label class="check-label"><input type="checkbox" /> Recordarme</label>
+          <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+        </div>
+        <button type="submit" class="btn btn-primary full-width auth-submit">Iniciar sesión</button>
+      </form>
+      <div class="auth-divider"><span>¿No tienes cuenta?</span></div>
+      <button class="btn btn-outline full-width" onclick="switchModal('login','register')">Crear cuenta gratis</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL REGISTRARSE
+       ============================================================ -->
+  <div class="auth-overlay" id="modal-register">
+    <div class="auth-box auth-box-lg">
+      <button class="auth-close" onclick="closeAuthModal('register')">✕</button>
+      <div class="auth-header">
+        <div class="auth-logo"><span class="logo-blue">Agenda</span><span class="logo-orange">tur</span></div>
+        <h2>Crear cuenta</h2>
+        <p>Regístrate gratis y empieza a planificar tu viaje.</p>
+      </div>
+      <form class="auth-form" id="form-register" onsubmit="submitRegister(event)">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Nombre completo</label>
+            <input type="text" name="nombre" placeholder="Juan García" required />
+          </div>
+          <div class="auth-field">
+            <label>Cédula / Documento</label>
+            <input type="text" name="cedula" placeholder="1234567890" required />
+          </div>
+        </div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Teléfono / Celular</label>
+            <input type="tel" name="telefono" placeholder="310 227 6645" required />
+          </div>
+          <div class="auth-field">
+            <label>Fecha de nacimiento</label>
+            <input type="date" name="fecha_nac" id="reg-dob" required />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Correo electrónico</label>
+          <input type="email" name="correo" id="reg-email" placeholder="tucorreo@ejemplo.com" required
+                 oninput="checkRegEmail(this.value)" />
+          <div id="reg-email-msg"></div>
+        </div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Contraseña</label>
+            <div class="pass-wrap">
+              <input type="password" id="reg-pass" placeholder="Mínimo 8 caracteres" required />
+              <button type="button" class="eye-btn" onclick="togglePass('reg-pass', this)">👁</button>
+            </div>
+          </div>
+          <div class="auth-field">
+            <label>Confirmar contraseña</label>
+            <div class="pass-wrap">
+              <input type="password" id="reg-pass2" placeholder="Repite la contraseña" required />
+              <button type="button" class="eye-btn" onclick="togglePass('reg-pass2', this)">👁</button>
+            </div>
+          </div>
+        </div>
+        <div class="pass-strength" id="pass-strength"></div>
+        <label class="check-label terms-check">
+          <input type="checkbox" required />
+          Acepto los <a href="#" target="_blank">Términos y condiciones</a> y la <a href="#" target="_blank">Política de privacidad</a>
+        </label>
+        <div id="reg-msg"></div>
+        <button type="submit" class="btn btn-primary full-width auth-submit" id="reg-btn">Crear mi cuenta</button>
+      </form>
+      <div class="auth-divider"><span>¿Ya tienes cuenta?</span></div>
+      <button class="btn btn-outline full-width" onclick="switchModal('register','login')">Iniciar sesión</button>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL RESERVA DE VUELO
+       ============================================================ -->
+  <div class="auth-overlay" id="modal-booking" onclick="if(event.target===this)closeBookingModal()">
+    <div class="auth-box auth-box-lg">
+      <button class="auth-close" onclick="closeBookingModal()">✕</button>
+      <div class="auth-header">
+        <h2 class="auth-title">✈ Solicitar precio de vuelo</h2>
+        <p>Déjanos tus datos y un asesor te enviará el precio exacto y disponibilidad.</p>
+      </div>
+
+      <!-- Resumen del vuelo seleccionado -->
+      <div id="bk-flight-summary"></div>
+
+      <form class="auth-form" id="form-booking" onsubmit="submitFlightBooking(event)">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Nombre completo *</label>
+            <input type="text" id="bk-name" required placeholder="Tu nombre completo" />
+          </div>
+          <div class="auth-field">
+            <label>Teléfono / WhatsApp *</label>
+            <input type="tel" id="bk-phone" required placeholder="+57 300 000 0000" />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Correo electrónico *</label>
+          <input type="email" id="bk-email" required placeholder="tucorreo@ejemplo.com" />
+        </div>
+        <div class="auth-field">
+          <label>Comentarios adicionales</label>
+          <textarea id="bk-notes" rows="2" placeholder="Preferencias de asiento, equipaje especial, etc." style="width:100%;padding:10px 14px;border:1.5px solid #d1d5db;border-radius:9px;font-size:.92rem;font-family:inherit;resize:vertical;outline:none;transition:border .2s;" onfocus="this.style.borderColor='#2333c8'" onblur="this.style.borderColor='#d1d5db'"></textarea>
+        </div>
+        <div id="bk-msg" style="margin-bottom:6px;"></div>
+        <button type="submit" class="btn btn-primary full-width auth-submit" id="bk-btn">📩 Solicitar precio</button>
+        <p style="text-align:center;font-size:.78rem;color:#94a3b8;margin-top:10px;">Un asesor te responderá con el precio y disponibilidad en menos de 24 horas.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODAL RESERVA DE HOTEL
+       ============================================================ -->
+  <div class="auth-overlay" id="modal-hotel-booking" onclick="if(event.target===this)closeHotelBooking()">
+    <div class="auth-box auth-box-lg">
+      <button class="auth-close" onclick="closeHotelBooking()">✕</button>
+      <div class="auth-header">
+        <h2 class="auth-title">🏨 Solicitar precio de hotel</h2>
+        <p>Déjanos tus datos y un asesor te enviará el precio y disponibilidad.</p>
+      </div>
+      <div id="bk-hotel-summary"></div>
+      <form class="auth-form" id="form-hotel-booking" onsubmit="submitHotelBooking(event)">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Nombre completo *</label>
+            <input type="text" id="hbk-name" required placeholder="Tu nombre completo" />
+          </div>
+          <div class="auth-field">
+            <label>Teléfono / WhatsApp *</label>
+            <input type="tel" id="hbk-phone" required placeholder="+57 300 000 0000" />
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>Correo electrónico *</label>
+          <input type="email" id="hbk-email" required placeholder="tucorreo@ejemplo.com" />
+        </div>
+        <div class="auth-field">
+          <label>Comentarios</label>
+          <textarea id="hbk-notes" rows="2" placeholder="Tipo de cama, piso, solicitudes especiales..." style="width:100%;padding:10px 14px;border:1.5px solid #d1d5db;border-radius:9px;font-size:.92rem;font-family:inherit;resize:vertical;outline:none;transition:border .2s;" onfocus="this.style.borderColor='#2333c8'" onblur="this.style.borderColor='#d1d5db'"></textarea>
+        </div>
+        <div id="hbk-msg" style="margin-bottom:6px;"></div>
+        <button type="submit" class="btn btn-primary full-width auth-submit" id="hbk-btn">📩 Solicitar reserva</button>
+        <p style="text-align:center;font-size:.78rem;color:#94a3b8;margin-top:10px;">Un asesor te confirmará disponibilidad y precio final en menos de 24 horas.</p>
+      </form>
+    </div>
+  </div>
+
+  <!-- EmailJS SDK — envía correos sin servidor PHP -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
