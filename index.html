@@ -998,95 +998,56 @@
   </section>
 
   <!-- ============================================================
-       PQRS
+       MODAL PQRS
        ============================================================ -->
-  <section class="section bg-light" id="pqrs">
-    <div class="container">
-      <div class="pqrs-layout">
-
-        <!-- Info lateral -->
-        <div class="pqrs-info">
-          <h2 class="section-title left">PQRS</h2>
-          <p class="section-sub left" style="margin-bottom:28px;">Peticiones, Quejas, Reclamos y Sugerencias</p>
-          <div class="pqrs-type-cards">
-            <div class="pqrs-type-card">
-              <span class="pqrs-icon">📋</span>
-              <div>
-                <strong>Petición</strong>
-                <p>Solicitudes de información, documentos o servicios.</p>
-              </div>
-            </div>
-            <div class="pqrs-type-card">
-              <span class="pqrs-icon">😤</span>
-              <div>
-                <strong>Queja</strong>
-                <p>Inconformidad con la atención o el servicio recibido.</p>
-              </div>
-            </div>
-            <div class="pqrs-type-card">
-              <span class="pqrs-icon">⚠️</span>
-              <div>
-                <strong>Reclamo</strong>
-                <p>Exigencia de corrección por un derecho insatisfecho.</p>
-              </div>
-            </div>
-            <div class="pqrs-type-card">
-              <span class="pqrs-icon">💡</span>
-              <div>
-                <strong>Sugerencia</strong>
-                <p>Ideas para mejorar nuestros servicios o procesos.</p>
-              </div>
-            </div>
-          </div>
-          <p style="font-size:.82rem;color:#94a3b8;margin-top:20px;">⏱ Tiempo de respuesta: máximo <strong>15 días hábiles</strong>.</p>
-        </div>
-
-        <!-- Formulario -->
-        <div class="pqrs-form-wrap">
-          <form class="pqrs-form" id="form-pqrs" onsubmit="submitPQRS(event)">
-            <div class="pqrs-field-row">
-              <div class="pqrs-field">
-                <label>Nombre completo *</label>
-                <input type="text" id="pqrs-name" required placeholder="Tu nombre completo" />
-              </div>
-              <div class="pqrs-field">
-                <label>Correo electrónico *</label>
-                <input type="email" id="pqrs-email" required placeholder="tucorreo@ejemplo.com" />
-              </div>
-            </div>
-            <div class="pqrs-field-row">
-              <div class="pqrs-field">
-                <label>Teléfono / WhatsApp</label>
-                <input type="tel" id="pqrs-phone" placeholder="+57 300 000 0000" />
-              </div>
-              <div class="pqrs-field">
-                <label>Tipo de solicitud *</label>
-                <select id="pqrs-type" required class="pqrs-select">
-                  <option value="">Seleccionar...</option>
-                  <option value="Petición">📋 Petición</option>
-                  <option value="Queja">😤 Queja</option>
-                  <option value="Reclamo">⚠️ Reclamo</option>
-                  <option value="Sugerencia">💡 Sugerencia</option>
-                </select>
-              </div>
-            </div>
-            <div class="pqrs-field">
-              <label>Número de reserva / referencia <span style="font-weight:400;color:#94a3b8;">(si aplica)</span></label>
-              <input type="text" id="pqrs-ref" placeholder="Ej: AGT-2024-00123" />
-            </div>
-            <div class="pqrs-field">
-              <label>Descripción detallada *</label>
-              <textarea id="pqrs-desc" rows="5" required placeholder="Describe con detalle tu solicitud, queja, reclamo o sugerencia..."></textarea>
-            </div>
-            <div id="pqrs-msg"></div>
-            <button type="submit" class="btn btn-primary full-width pqrs-submit" id="pqrs-btn">Enviar PQRS →</button>
-            <p style="font-size:.75rem;color:#94a3b8;text-align:center;margin-top:10px;">Recibirás confirmación a tu correo en menos de 24 horas.</p>
-          </form>
-        </div>
-
+  <div class="auth-overlay" id="modal-pqrs" onclick="if(event.target===this)closePQRS()">
+    <div class="auth-box" style="max-width:640px;">
+      <button class="auth-close" onclick="closePQRS()">✕</button>
+      <div class="auth-header">
+        <h2 class="auth-title">📋 PQRS</h2>
+        <p>Peticiones, Quejas, Reclamos y Sugerencias</p>
       </div>
+      <form class="auth-form" id="form-pqrs" onsubmit="submitPQRS(event)">
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Nombre completo *</label>
+            <input type="text" id="pqrs-name" required placeholder="Tu nombre completo" />
+          </div>
+          <div class="auth-field">
+            <label>Correo electrónico *</label>
+            <input type="email" id="pqrs-email" required placeholder="tucorreo@ejemplo.com" />
+          </div>
+        </div>
+        <div class="auth-row">
+          <div class="auth-field">
+            <label>Teléfono / WhatsApp</label>
+            <input type="tel" id="pqrs-phone" placeholder="+57 300 000 0000" />
+          </div>
+          <div class="auth-field">
+            <label>Tipo de solicitud *</label>
+            <select id="pqrs-type" required class="auth-select">
+              <option value="">Seleccionar...</option>
+              <option value="Petición">📋 Petición</option>
+              <option value="Queja">😤 Queja</option>
+              <option value="Reclamo">⚠️ Reclamo</option>
+              <option value="Sugerencia">💡 Sugerencia</option>
+            </select>
+          </div>
+        </div>
+        <div class="auth-field">
+          <label>N.º reserva / referencia <span style="font-weight:400;color:#94a3b8;">(si aplica)</span></label>
+          <input type="text" id="pqrs-ref" placeholder="Ej: AGT-2024-00123" />
+        </div>
+        <div class="auth-field">
+          <label>Descripción detallada *</label>
+          <textarea id="pqrs-desc" rows="4" required placeholder="Describe tu solicitud, queja, reclamo o sugerencia..." style="padding:11px 14px;border:2px solid #d1d5db;border-radius:9px;font-size:.92rem;font-family:inherit;resize:vertical;width:100%;outline:none;" onfocus="this.style.borderColor='#2333c8'" onblur="this.style.borderColor='#d1d5db'"></textarea>
+        </div>
+        <div id="pqrs-msg"></div>
+        <button type="submit" class="btn btn-primary full-width auth-submit" id="pqrs-btn">Enviar PQRS →</button>
+        <p style="text-align:center;font-size:.75rem;color:#94a3b8;margin-top:8px;">⏱ Respuesta en máximo 15 días hábiles.</p>
+      </form>
     </div>
-  </section>
+  </div>
 
   <!-- ============================================================
        FOOTER
@@ -1144,7 +1105,7 @@
           <li><a href="#">Términos y condiciones</a></li>
           <li><a href="#">Política de privacidad</a></li>
           <li><a href="#contacto">Contacto</a></li>
-          <li><a href="#pqrs">PQRS</a></li>
+          <li><a href="#" onclick="openPQRS(); return false;">PQRS</a></li>
         </ul>
       </div>
       <div class="footer-links">

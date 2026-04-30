@@ -1234,6 +1234,17 @@ function submitContact(e) {
 }
 
 // ---------- PQRS ----------
+function openPQRS() {
+  document.getElementById('pqrs-msg').innerHTML = '';
+  document.getElementById('form-pqrs').reset();
+  document.getElementById('modal-pqrs').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closePQRS() {
+  document.getElementById('modal-pqrs').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
 async function submitPQRS(e) {
   e.preventDefault();
   const btn   = document.getElementById('pqrs-btn');
