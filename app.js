@@ -1233,6 +1233,46 @@ function submitContact(e) {
   e.target.reset();
 }
 
+// ---------- PQRS ----------
+async function submitPQRS(e) {
+  e.preventDefault();
+  const btn   = document.getElementById('pqrs-btn');
+  const msgEl = document.getElementById('pqrs-msg');
+  const name  = document.getElementById('pqrs-name').value.trim();
+  const email = document.getElementById('pqrs-email').value.trim();
+  const phone = document.getElementById('pqrs-phone').value.trim();
+  const type  = document.getElementById('pqrs-type').value;
+  const ref   = document.getElementById('pqrs-ref').value.trim();
+  const desc  = document.getElementById('pqrs-desc').value.trim();
+  const now   = new Date().toLocaleString('es-CO');
+
+  const templateParams = {
+    nombre:    `[PQRS - ${type}] ${name}`,
+    cedula:    `Tipo: ${type}${ref ? ' | Ref: ' + ref : ''}`,
+    telefono:  phone || 'No indicado',
+    correo:    email,
+    fecha_nac: `PQRS - ${type}`,
+    fecha_reg: `Fecha: ${now} | Descripción: ${desc}`,
+  };
+
+  btn.disabled = true;
+  btn.textContent = '⏳ Enviando...';
+  msgEl.innerHTML = '';
+
+  try {
+    emailjs.init(EJS.publicKey);
+    await emailjs.send(EJS.serviceId, EJS.templateAdmin, templateParams);
+    msgEl.innerHTML = `<p style="color:#16a34a;font-size:.88rem;margin-top:4px;">✅ PQRS enviada correctamente. Responderemos en máximo 15 días hábiles.</p>`;
+    document.getElementById('form-pqrs').reset();
+  } catch (err) {
+    console.error('PQRS error:', err);
+    msgEl.innerHTML = `<p style="color:#dc2626;font-size:.85rem;margin-top:4px;">⚠️ No se pudo enviar. Intenta de nuevo.</p>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Enviar PQRS →';
+  }
+}
+
 // ---------- MODAL ----------
 function showModal(title, msg) {
   document.getElementById('modal-title').textContent = title;

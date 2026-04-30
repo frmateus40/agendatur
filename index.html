@@ -43,13 +43,24 @@
         </div>
       </nav>
 
-      <!-- ACCIONES -->
-      <div class="header-actions">
-        <!-- Icono de usuario (siempre visible) -->
-        <div id="auth-buttons" style="position:relative;">
-          <button class="user-icon-btn" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
+    </div>
+
+    <!-- BARRA SECUNDARIA (canales) + ícono de sesión -->
+    <div class="subheader">
+      <div class="container subheader-inner">
+        <a href="#" class="sub-link active">✈ Vuelos</a>
+        <a href="#hoteles" class="sub-link">🏨 Hoteles</a>
+        <a href="#vuelo-hotel" class="sub-link">✈🏨 Vuelo + Hotel</a>
+        <a href="#tours" class="sub-link">🗺 Tours</a>
+        <a href="#paquetes" class="sub-link">🎒 Paquetes</a>
+        <a href="#autos" class="sub-link">🚗 Autos</a>
+        <a href="#cruceros" class="sub-link">🚢 Cruceros</a>
+        <a href="#seguros" class="sub-link">🛡 Asistencia</a>
+        <!-- Icono de usuario en la barra azul -->
+        <div class="sub-user" id="auth-buttons" style="position:relative;margin-left:auto;">
+          <button class="user-icon-btn user-icon-btn--white" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
             <span id="user-icon-svg">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
                 <circle cx="12" cy="7" r="4"/>
               </svg>
@@ -84,20 +95,6 @@
           <span id="user-name-display" style="display:none;"></span>
           <span id="user-avatar" style="display:none;"></span>
         </div>
-      </div>
-    </div>
-
-    <!-- BARRA SECUNDARIA (canales) -->
-    <div class="subheader">
-      <div class="container subheader-inner">
-        <a href="#" class="sub-link active">✈ Vuelos</a>
-        <a href="#hoteles" class="sub-link">🏨 Hoteles</a>
-        <a href="#vuelo-hotel" class="sub-link">✈🏨 Vuelo + Hotel</a>
-        <a href="#tours" class="sub-link">🗺 Tours</a>
-        <a href="#paquetes" class="sub-link">🎒 Paquetes</a>
-        <a href="#autos" class="sub-link">🚗 Autos</a>
-        <a href="#cruceros" class="sub-link">🚢 Cruceros</a>
-        <a href="#seguros" class="sub-link">🛡 Asistencia</a>
       </div>
     </div>
   </header>
@@ -997,6 +994,97 @@
         <textarea rows="4" placeholder="Cuéntanos sobre tu viaje soñado…"></textarea>
         <button type="submit" class="btn btn-primary full-width">Enviar consulta ✈</button>
       </form>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PQRS
+       ============================================================ -->
+  <section class="section bg-light" id="pqrs">
+    <div class="container">
+      <div class="pqrs-layout">
+
+        <!-- Info lateral -->
+        <div class="pqrs-info">
+          <h2 class="section-title left">PQRS</h2>
+          <p class="section-sub left" style="margin-bottom:28px;">Peticiones, Quejas, Reclamos y Sugerencias</p>
+          <div class="pqrs-type-cards">
+            <div class="pqrs-type-card">
+              <span class="pqrs-icon">📋</span>
+              <div>
+                <strong>Petición</strong>
+                <p>Solicitudes de información, documentos o servicios.</p>
+              </div>
+            </div>
+            <div class="pqrs-type-card">
+              <span class="pqrs-icon">😤</span>
+              <div>
+                <strong>Queja</strong>
+                <p>Inconformidad con la atención o el servicio recibido.</p>
+              </div>
+            </div>
+            <div class="pqrs-type-card">
+              <span class="pqrs-icon">⚠️</span>
+              <div>
+                <strong>Reclamo</strong>
+                <p>Exigencia de corrección por un derecho insatisfecho.</p>
+              </div>
+            </div>
+            <div class="pqrs-type-card">
+              <span class="pqrs-icon">💡</span>
+              <div>
+                <strong>Sugerencia</strong>
+                <p>Ideas para mejorar nuestros servicios o procesos.</p>
+              </div>
+            </div>
+          </div>
+          <p style="font-size:.82rem;color:#94a3b8;margin-top:20px;">⏱ Tiempo de respuesta: máximo <strong>15 días hábiles</strong>.</p>
+        </div>
+
+        <!-- Formulario -->
+        <div class="pqrs-form-wrap">
+          <form class="pqrs-form" id="form-pqrs" onsubmit="submitPQRS(event)">
+            <div class="pqrs-field-row">
+              <div class="pqrs-field">
+                <label>Nombre completo *</label>
+                <input type="text" id="pqrs-name" required placeholder="Tu nombre completo" />
+              </div>
+              <div class="pqrs-field">
+                <label>Correo electrónico *</label>
+                <input type="email" id="pqrs-email" required placeholder="tucorreo@ejemplo.com" />
+              </div>
+            </div>
+            <div class="pqrs-field-row">
+              <div class="pqrs-field">
+                <label>Teléfono / WhatsApp</label>
+                <input type="tel" id="pqrs-phone" placeholder="+57 300 000 0000" />
+              </div>
+              <div class="pqrs-field">
+                <label>Tipo de solicitud *</label>
+                <select id="pqrs-type" required class="pqrs-select">
+                  <option value="">Seleccionar...</option>
+                  <option value="Petición">📋 Petición</option>
+                  <option value="Queja">😤 Queja</option>
+                  <option value="Reclamo">⚠️ Reclamo</option>
+                  <option value="Sugerencia">💡 Sugerencia</option>
+                </select>
+              </div>
+            </div>
+            <div class="pqrs-field">
+              <label>Número de reserva / referencia <span style="font-weight:400;color:#94a3b8;">(si aplica)</span></label>
+              <input type="text" id="pqrs-ref" placeholder="Ej: AGT-2024-00123" />
+            </div>
+            <div class="pqrs-field">
+              <label>Descripción detallada *</label>
+              <textarea id="pqrs-desc" rows="5" required placeholder="Describe con detalle tu solicitud, queja, reclamo o sugerencia..."></textarea>
+            </div>
+            <div id="pqrs-msg"></div>
+            <button type="submit" class="btn btn-primary full-width pqrs-submit" id="pqrs-btn">Enviar PQRS →</button>
+            <p style="font-size:.75rem;color:#94a3b8;text-align:center;margin-top:10px;">Recibirás confirmación a tu correo en menos de 24 horas.</p>
+          </form>
+        </div>
+
+      </div>
     </div>
   </section>
 
