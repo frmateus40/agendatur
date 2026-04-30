@@ -123,6 +123,7 @@
         <div class="searcher-tabs">
           <button class="sr-tab active" data-tab="tab-vuelos">✈ Vuelos</button>
           <button class="sr-tab" data-tab="tab-hoteles">🏨 Hoteles</button>
+          <button class="sr-tab" data-tab="tab-vuelo-hotel">✈🏨 Vuelo + Hotel</button>
           <button class="sr-tab" data-tab="tab-paquetes">🎒 Paquetes</button>
           <button class="sr-tab" data-tab="tab-autos">🚗 Autos</button>
         </div>
@@ -229,6 +230,60 @@
               </select>
             </div>
             <button class="btn btn-search-main" onclick="searchHotels()">Buscar hoteles</button>
+          </div>
+        </div>
+
+        <!-- ---- TAB: VUELO + HOTEL ---- -->
+        <div class="sr-panel" id="tab-vuelo-hotel">
+          <div class="sr-fields">
+            <!-- ORIGEN -->
+            <div class="sr-field sr-field-lg" style="position:relative;">
+              <label>Origen (vuelo)</label>
+              <input type="text" id="vh-origin" placeholder="Ej: Bogotá, Lima, Madrid…"
+                     autocomplete="off" oninput="flightAC(this,'ac-vh-origin')" />
+              <ul class="autocomplete-list" id="ac-vh-origin"></ul>
+              <input type="hidden" id="vh-origin-code" />
+            </div>
+            <!-- DESTINO -->
+            <div class="sr-field sr-field-lg" style="position:relative;">
+              <label>Destino / Ciudad hotel</label>
+              <input type="text" id="vh-dest" placeholder="Ej: Cancún, París, Miami…"
+                     autocomplete="off" oninput="flightAC(this,'ac-vh-dest')" />
+              <ul class="autocomplete-list" id="ac-vh-dest"></ul>
+              <input type="hidden" id="vh-dest-code" />
+            </div>
+            <!-- SALIDA -->
+            <div class="sr-field sr-field-sm">
+              <label>Salida</label>
+              <input type="date" id="vh-salida" />
+            </div>
+            <!-- REGRESO -->
+            <div class="sr-field sr-field-sm">
+              <label>Regreso</label>
+              <input type="date" id="vh-regreso" />
+            </div>
+            <!-- PASAJEROS -->
+            <div class="sr-field sr-field-xs">
+              <label>Personas</label>
+              <select id="vh-adults">
+                <option value="1">1</option>
+                <option value="2" selected>2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
+            </div>
+            <!-- HABITACIONES -->
+            <div class="sr-field sr-field-xs">
+              <label>Habitaciones</label>
+              <select id="vh-rooms">
+                <option value="1">1 hab.</option>
+                <option value="2">2 hab.</option>
+                <option value="3">3 hab.</option>
+              </select>
+            </div>
+            <button class="btn btn-search-main" onclick="searchVueloHotel()">Buscar paquete</button>
           </div>
         </div>
 

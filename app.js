@@ -686,6 +686,44 @@ let hotelSearchCtx  = {};
 let activeStarFilter = 0;
 let activeSortOrder  = 'stars';
 
+function searchVueloHotel() {
+  const origin  = document.getElementById('vh-origin').value.trim();
+  const dest    = document.getElementById('vh-dest').value.trim();
+  const salida  = document.getElementById('vh-salida').value;
+  const regreso = document.getElementById('vh-regreso').value;
+  const adults  = document.getElementById('vh-adults').value;
+  const rooms   = document.getElementById('vh-rooms').value;
+
+  if (!origin || !dest) {
+    showModal('⚠️ Campos requeridos', 'Por favor ingresa el origen y el destino.');
+    return;
+  }
+  if (!salida || !regreso) {
+    showModal('⚠️ Fechas requeridas', 'Selecciona las fechas de salida y regreso.');
+    return;
+  }
+
+  // Buscar hoteles del destino y mostrar resultados
+  const key   = normalize(dest);
+  const city  = dest;
+  hotelSearchCtx = { city, checkin: salida, checkout: regreso, guests: adults + ' persona(s)' };
+
+  const data = hotelData[key] || hotelData['default'];
+  allHotels       = data.map(h => ({ ...h, priceCOP: Math.round(h.price * copRate / 1000) * 1000 }));
+  activeStarFilter = 0;
+  activeSortOrder  = 'stars';
+
+  const section = document.getElementById('results-section');
+  const grid    = document.getElementById('results-grid');
+  const title   = document.getElementById('results-title');
+
+  title.textContent = `✈🏨 Paquete Vuelo + Hotel en ${dest} · ${adults} persona(s) · ${rooms} hab.`;
+  renderHotelFilters();
+  renderHotelCards(allHotels, city);
+  section.style.display = 'block';
+  section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 async function searchHotels() {
   const city = cityInput ? cityInput.value.trim() : '';
   if (!city) {
