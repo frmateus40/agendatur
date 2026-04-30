@@ -13,41 +13,22 @@
   <!-- ============================================================
        HEADER — Edita el logo, colores y links en esta sección
        ============================================================ -->
-  <header class="header" id="top">
+  <header class="header header--blue" id="top">
     <div class="container header-inner">
 
-      <!-- HAMBURGER (izquierda en móvil) -->
-      <button class="hamburger" id="hamburger" aria-label="Menú">&#9776;</button>
+      <!-- HAMBURGER (móvil) -->
+      <button class="hamburger hamburger--white" id="hamburger" aria-label="Menú">&#9776;</button>
 
       <!-- LOGO -->
-      <a href="#" class="logo">
+      <a href="#" class="logo logo--white">
         <div class="logo-text-wrap">
-          <div class="logo-main"><span class="logo-blue">Agenda</span><span class="logo-orange">tur</span></div>
-          <div class="logo-slogan">Viaja a tu manera</div>
+          <div class="logo-main"><span class="logo-white-main">Agenda</span><span class="logo-orange">tur</span></div>
+          <div class="logo-slogan logo-slogan--white">Viaja a tu manera</div>
         </div>
       </a>
 
-      <!-- NAVEGACIÓN PRINCIPAL -->
-      <nav class="nav" id="nav">
-        <a href="#search" class="nav-link">Vuelos</a>
-        <a href="#" class="nav-link" onclick="scrollToSearch('tab-hoteles'); return false;">Hoteles</a>
-        <a href="#vuelo-hotel" class="nav-link">Vuelo + Hotel</a>
-        <a href="#tours" class="nav-link">Tours</a>
-        <a href="#paquetes" class="nav-link">Paquetes</a>
-        <a href="#autos" class="nav-link">Autos</a>
-        <a href="#contacto" class="nav-link">Contacto</a>
-        <!-- Botones de sesión visibles solo en menú móvil -->
-        <div class="nav-auth-mobile" id="nav-auth-mobile">
-          <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
-          <button class="btn btn-register" onclick="openAuthModal('register')">Registrarse</button>
-        </div>
-      </nav>
-
-    </div>
-
-    <!-- BARRA SECUNDARIA (canales) + ícono de sesión -->
-    <div class="subheader">
-      <div class="container subheader-inner">
+      <!-- LINKS DE NAVEGACIÓN (centro) -->
+      <nav class="nav-blue" id="nav">
         <a href="#" class="sub-link active">✈ Vuelos</a>
         <a href="#" class="sub-link" onclick="scrollToSearch('tab-hoteles'); return false;">🏨 Hoteles</a>
         <a href="#vuelo-hotel" class="sub-link">✈🏨 Vuelo + Hotel</a>
@@ -56,46 +37,50 @@
         <a href="#autos" class="sub-link">🚗 Autos</a>
         <a href="#cruceros" class="sub-link">🚢 Cruceros</a>
         <a href="#seguros" class="sub-link">🛡 Asistencia</a>
-        <!-- Icono de usuario en la barra azul -->
-        <div class="sub-user" id="auth-buttons" style="position:relative;margin-left:auto;">
-          <button class="user-icon-btn user-icon-btn--white" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
-            <span id="user-icon-svg">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                <circle cx="12" cy="7" r="4"/>
-              </svg>
-            </span>
-            <span id="user-icon-initials"></span>
-          </button>
-          <!-- Dropdown: iniciar sesión (sin sesión) -->
-          <div class="login-dropdown" id="login-dropdown">
-            <p class="ld-title">Iniciar sesión</p>
-            <div class="ld-field">
-              <input type="email" id="ld-email" placeholder="Correo electrónico" autocomplete="email" />
-            </div>
-            <div class="ld-field">
-              <input type="password" id="ld-pass" placeholder="Contraseña" autocomplete="current-password" />
-            </div>
-            <button class="btn btn-primary ld-submit" onclick="submitDropdownLogin()">Entrar</button>
-            <a href="#" class="ld-forgot" onclick="return false;">¿Olvidó su contraseña?</a>
-            <p class="ld-no-account">¿No tiene cuenta? <a href="#" onclick="openRegFromDropdown(); return false;">Regístrese aquí</a></p>
-          </div>
-          <!-- Dropdown: menú de usuario (con sesión) -->
-          <div class="login-dropdown" id="uid-menu">
-            <p id="uid-name-display" class="ld-name-full"></p>
-            <a href="#" class="ld-drop-item">👤 Mi perfil</a>
-            <a href="#" class="ld-drop-item">🧳 Mis viajes</a>
-            <a href="#" class="ld-drop-item">⚙ Configuración</a>
-            <hr class="drop-divider" style="margin:6px 0;"/>
-            <button class="ld-drop-item ld-drop-logout" onclick="logout()">🚪 Cerrar sesión</button>
-          </div>
+        <!-- menú móvil: botones sesión -->
+        <div class="nav-auth-mobile" id="nav-auth-mobile">
+          <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
+          <button class="btn btn-register" onclick="openAuthModal('register')">Registrarse</button>
         </div>
-        <!-- Compatibilidad JS (oculto) -->
-        <div id="user-greeting" style="display:none;">
-          <span id="user-name-display" style="display:none;"></span>
-          <span id="user-avatar" style="display:none;"></span>
+      </nav>
+
+      <!-- ÍCONO DE SESIÓN (derecha) -->
+      <div class="sub-user" id="auth-buttons" style="position:relative;flex-shrink:0;">
+        <button class="user-icon-btn user-icon-btn--white" id="user-icon-btn" onclick="toggleLoginDropdown()" aria-label="Acceder">
+          <span id="user-icon-svg">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+          </span>
+          <span id="user-icon-initials"></span>
+        </button>
+        <div class="login-dropdown" id="login-dropdown">
+          <p class="ld-title">Iniciar sesión</p>
+          <div class="ld-field">
+            <input type="email" id="ld-email" placeholder="Correo electrónico" autocomplete="email" />
+          </div>
+          <div class="ld-field">
+            <input type="password" id="ld-pass" placeholder="Contraseña" autocomplete="current-password" />
+          </div>
+          <button class="btn btn-primary ld-submit" onclick="submitDropdownLogin()">Entrar</button>
+          <a href="#" class="ld-forgot" onclick="return false;">¿Olvidó su contraseña?</a>
+          <p class="ld-no-account">¿No tiene cuenta? <a href="#" onclick="openRegFromDropdown(); return false;">Regístrese aquí</a></p>
+        </div>
+        <div class="login-dropdown" id="uid-menu">
+          <p id="uid-name-display" class="ld-name-full"></p>
+          <a href="#" class="ld-drop-item">👤 Mi perfil</a>
+          <a href="#" class="ld-drop-item">🧳 Mis viajes</a>
+          <a href="#" class="ld-drop-item">⚙ Configuración</a>
+          <hr class="drop-divider" style="margin:6px 0;"/>
+          <button class="ld-drop-item ld-drop-logout" onclick="logout()">🚪 Cerrar sesión</button>
         </div>
       </div>
+      <div id="user-greeting" style="display:none;">
+        <span id="user-name-display" style="display:none;"></span>
+        <span id="user-avatar" style="display:none;"></span>
+      </div>
+
     </div>
   </header>
 

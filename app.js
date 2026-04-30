@@ -1814,7 +1814,7 @@ document.getElementById('modal').addEventListener('click', e => {
 // ---------- HAMBURGER ----------
 const hamburger = document.getElementById('hamburger');
 const nav       = document.getElementById('nav');
-if (hamburger) {
+if (hamburger && nav) {
   hamburger.addEventListener('click', () => nav.classList.toggle('open'));
 }
 

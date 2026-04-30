@@ -51,35 +51,39 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   background: var(--white);
   box-shadow: 0 2px 8px rgba(0,0,0,.09);
 }
+.header--blue {
+  background: var(--brand);
+  box-shadow: 0 2px 12px rgba(0,0,0,.18);
+}
 .header-inner {
-  display: flex; align-items: center; gap: 24px; height: 64px;
+  display: flex; align-items: center; gap: 16px; height: 56px;
 }
 
-/* LOGO — cambia font, color o reemplaza por <img> */
+/* LOGO */
 .logo { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
 .logo-text-wrap { display: flex; flex-direction: column; line-height: 1; }
-.logo-main { font-size: 1.7rem; font-weight: 800; letter-spacing: -1px; }
-.logo-blue   { color: #2333c8; }
-.logo-orange { color: #f7941d; }
-.logo-slogan { font-size: .7rem; font-weight: 600; color: #f7941d; letter-spacing: .02em; margin-top: 1px; }
+.logo-main { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+.logo-blue        { color: #2333c8; }
+.logo-white-main  { color: #fff; }
+.logo-orange      { color: #f7941d; }
+.logo-slogan      { font-size: .65rem; font-weight: 600; color: #f7941d; letter-spacing: .02em; margin-top: 1px; }
+.logo-slogan--white { color: rgba(255,255,255,.7); }
+.logo-img { height: 44px; width: auto; display: block; }
 
-/* Logo imagen (si en el futuro quieres usar archivo PNG) */
-.logo-img { height: 52px; width: auto; display: block; }
+/* Nav azul (links en la barra) */
+.nav-blue {
+  display: flex; align-items: center; flex: 1; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.nav-blue::-webkit-scrollbar { display: none; }
 
 .nav { display: none; gap: 4px; flex: 1; justify-content: center; }
-.nav-link {
-  padding: 8px 12px; border-radius: 6px; font-size: .87rem; font-weight: 500;
-  color: var(--text-muted); transition: color var(--transition), background var(--transition);
-  white-space: nowrap;
-}
+.nav-link { padding: 8px 12px; border-radius: 6px; font-size: .87rem; font-weight: 500; color: var(--text-muted); white-space: nowrap; }
 .nav-link:hover { color: var(--brand); background: var(--brand-light); }
-.nav-link.active { color: var(--brand); font-weight: 700; }
 
 .header-actions { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
-.header-help { font-size: .82rem; color: var(--text-muted); white-space: nowrap; }
-.header-help:hover { color: var(--brand); }
-
 .hamburger { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text); padding: 4px; }
+.hamburger--white { color: #fff; }
 .nav-auth-mobile { display: none; }
 
 /* ---- ICONO DE USUARIO + DROPDOWN LOGIN ---- */
@@ -804,13 +808,11 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
   .combo-section { grid-template-columns: 1fr; gap: 32px; }
   .combo-img { order: -1; }
   .combo-img img { height: 260px; }
-  .nav { display: none; }
+  .nav-blue { display: none; }
   .hamburger { display: block; }
-  .header-inner { justify-content: center; position: relative; }
-  .hamburger { position: absolute; left: 16px; }
-  .header-actions { position: absolute; right: 16px; }
-  .nav.open { display: flex; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: #fff; border-bottom: 1px solid var(--border); padding: 16px 20px; gap: 8px; z-index: 999; box-shadow: var(--shadow-md); }
-  .nav.open .nav-link { padding: 12px 16px; }
+  .header-inner { justify-content: space-between; }
+  .nav-blue.open { display: flex; flex-direction: column; position: absolute; top: 56px; left: 0; right: 0; background: var(--brand); padding: 12px 20px; gap: 4px; z-index: 999; box-shadow: var(--shadow-md); }
+  .nav-blue.open .sub-link { padding: 11px 16px; border-radius: 6px; }
   .nav-auth-mobile { display: none !important; }
 }
 
