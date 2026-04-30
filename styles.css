@@ -73,6 +73,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 /* Nav azul (links en la barra) */
 .nav-blue {
   display: flex; align-items: center; flex: 1; overflow-x: auto;
+  padding-left: 28px;
   scrollbar-width: none; -ms-overflow-style: none;
 }
 .nav-blue::-webkit-scrollbar { display: none; }
@@ -94,9 +95,9 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 }
 .user-icon-btn:hover { background: var(--brand); color: #fff; }
 .login-dropdown {
-  display: none; position: absolute; top: calc(100% + 12px); right: 0;
+  display: none; position: fixed; top: 68px; right: 20px;
   background: #fff; border-radius: 14px; box-shadow: 0 8px 32px rgba(0,0,0,.15);
-  padding: 22px 20px; min-width: 280px; z-index: 3000; border: 1px solid var(--border);
+  padding: 22px 20px; min-width: 280px; z-index: 99999; border: 1px solid var(--border);
 }
 .login-dropdown.open { display: block; animation: slideUp .18s ease; }
 .ld-title { font-size: 1.05rem; font-weight: 700; color: var(--brand); margin: 0 0 16px; }

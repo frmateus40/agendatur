@@ -1937,18 +1937,32 @@ document.addEventListener('click', e => {
 });
 
 // ---------- LOGIN / USER DROPDOWN ----------
+function _positionLoginDropdown(dropdown) {
+  const btn = document.getElementById('user-icon-btn');
+  if (!btn || !dropdown) return;
+  const rect = btn.getBoundingClientRect();
+  dropdown.style.top   = (rect.bottom + 8) + 'px';
+  dropdown.style.right = (window.innerWidth - rect.right) + 'px';
+  dropdown.style.left  = 'auto';
+}
 function toggleLoginDropdown() {
   const isLoggedIn = !!localStorage.getItem('agt_user');
   if (isLoggedIn) {
     const dd = document.getElementById('uid-menu');
-    if (dd) dd.classList.toggle('open');
     const ld = document.getElementById('login-dropdown');
     if (ld) ld.classList.remove('open');
+    if (dd) {
+      if (dd.classList.contains('open')) { dd.classList.remove('open'); }
+      else { _positionLoginDropdown(dd); dd.classList.add('open'); }
+    }
   } else {
     const dd = document.getElementById('login-dropdown');
-    if (dd) dd.classList.toggle('open');
     const um = document.getElementById('uid-menu');
     if (um) um.classList.remove('open');
+    if (dd) {
+      if (dd.classList.contains('open')) { dd.classList.remove('open'); }
+      else { _positionLoginDropdown(dd); dd.classList.add('open'); }
+    }
   }
 }
 function closeLoginDropdown() {
