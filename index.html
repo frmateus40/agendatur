@@ -30,7 +30,7 @@
       <!-- NAVEGACIÓN PRINCIPAL -->
       <nav class="nav" id="nav">
         <a href="#search" class="nav-link">Vuelos</a>
-        <a href="#hoteles" class="nav-link">Hoteles</a>
+        <a href="#" class="nav-link" onclick="scrollToSearch('tab-hoteles'); return false;">Hoteles</a>
         <a href="#vuelo-hotel" class="nav-link">Vuelo + Hotel</a>
         <a href="#tours" class="nav-link">Tours</a>
         <a href="#paquetes" class="nav-link">Paquetes</a>
@@ -49,7 +49,7 @@
     <div class="subheader">
       <div class="container subheader-inner">
         <a href="#" class="sub-link active">✈ Vuelos</a>
-        <a href="#hoteles" class="sub-link">🏨 Hoteles</a>
+        <a href="#" class="sub-link" onclick="scrollToSearch('tab-hoteles'); return false;">🏨 Hoteles</a>
         <a href="#vuelo-hotel" class="sub-link">✈🏨 Vuelo + Hotel</a>
         <a href="#tours" class="sub-link">🗺 Tours</a>
         <a href="#paquetes" class="sub-link">🎒 Paquetes</a>
@@ -506,108 +506,7 @@
   <!-- ============================================================
        HOTELES — BUSCADOR + RESULTADOS
        ============================================================ -->
-  <section id="hoteles" class="hotel-search-section">
-
-    <!-- BANNER BUSCADOR -->
-    <div class="hotel-search-banner">
-      <div class="container">
-        <h2 class="hotel-search-title">🏨 Encuentra tu hotel ideal</h2>
-        <p class="hotel-search-sub">Busca por ciudad, elige tus fechas y filtra por tus preferencias</p>
-        <form class="hotel-search-bar" onsubmit="runHotelSearch(event)">
-          <div class="hsb-field">
-            <label>Destino</label>
-            <select id="hsb-city" class="hsb-select" required>
-              <option value="">¿A dónde vas?</option>
-              <optgroup label="🇨🇴 Colombia">
-                <option value="Bogotá|bogota">Bogotá</option>
-                <option value="Medellín|medellin">Medellín</option>
-                <option value="Cartagena|cartagena">Cartagena</option>
-                <option value="Cali|cali">Cali</option>
-                <option value="Barranquilla|barranquilla">Barranquilla</option>
-              </optgroup>
-              <optgroup label="🌴 México & Caribe">
-                <option value="Cancún|cancun">Cancún</option>
-                <option value="Ciudad de México|ciudad de mexico">Ciudad de México</option>
-                <option value="Punta Cana|punta cana">Punta Cana</option>
-                <option value="La Habana|la habana">La Habana</option>
-                <option value="Santo Domingo|santo domingo">Santo Domingo</option>
-              </optgroup>
-              <optgroup label="🌎 Suramérica">
-                <option value="Buenos Aires|buenos aires">Buenos Aires</option>
-                <option value="Lima|lima">Lima</option>
-                <option value="Cusco|cusco">Cusco</option>
-                <option value="Río de Janeiro|rio de janeiro">Río de Janeiro</option>
-                <option value="Santiago de Chile|santiago">Santiago de Chile</option>
-                <option value="São Paulo|sao paulo">São Paulo</option>
-                <option value="Ciudad de Panamá|ciudad de panama">Ciudad de Panamá</option>
-                <option value="Montevideo|montevideo">Montevideo</option>
-                <option value="Quito|quito">Quito</option>
-              </optgroup>
-              <optgroup label="🇺🇸 Estados Unidos">
-                <option value="Miami|miami">Miami</option>
-                <option value="Nueva York|nueva york">Nueva York</option>
-                <option value="Las Vegas|las vegas">Las Vegas</option>
-                <option value="Orlando|orlando">Orlando</option>
-                <option value="Los Ángeles|los angeles">Los Ángeles</option>
-                <option value="San Francisco|san francisco">San Francisco</option>
-              </optgroup>
-              <optgroup label="🇪🇺 Europa">
-                <option value="París|paris">París</option>
-                <option value="Madrid|madrid">Madrid</option>
-                <option value="Barcelona|barcelona">Barcelona</option>
-                <option value="Roma|roma">Roma</option>
-                <option value="Londres|londres">Londres</option>
-                <option value="Ámsterdam|amsterdam">Ámsterdam</option>
-                <option value="Lisboa|lisboa">Lisboa</option>
-                <option value="Berlín|berlin">Berlín</option>
-                <option value="Viena|viena">Viena</option>
-                <option value="Praga|praga">Praga</option>
-              </optgroup>
-            </select>
-          </div>
-          <div class="hsb-field">
-            <label>Ingreso</label>
-            <input type="date" id="hsb-checkin" required />
-          </div>
-          <div class="hsb-field">
-            <label>Salida</label>
-            <input type="date" id="hsb-checkout" required />
-          </div>
-          <div class="hsb-field">
-            <label>Personas</label>
-            <select id="hsb-guests" class="hsb-select" required>
-              <option value="">N.º</option>
-              <option value="1 persona">1</option>
-              <option value="2 personas">2</option>
-              <option value="3 personas">3</option>
-              <option value="4 personas">4</option>
-              <option value="5 o más personas">5+</option>
-            </select>
-          </div>
-          <button type="submit" class="hsb-btn">Buscar hoteles</button>
-        </form>
-        <div id="hsb-msg" style="text-align:center;margin-top:10px;color:#fca5a5;font-size:.88rem;"></div>
-      </div>
-    </div>
-
-    <!-- RESULTADOS -->
-    <div class="container" style="padding-top:40px;padding-bottom:60px;">
-      <!-- Estado vacío -->
-      <div id="hotel-empty-state" style="text-align:center;padding:60px 20px;color:#94a3b8;">
-        <div style="font-size:3rem;margin-bottom:16px;">🏨</div>
-        <p style="font-size:1.1rem;font-weight:600;color:#64748b;">Elige un destino y tus fechas para ver hoteles disponibles</p>
-      </div>
-      <!-- Filtros + grid (ocultos hasta buscar) -->
-      <div id="hotel-results-wrap" style="display:none;">
-        <div class="hotel-results-header">
-          <h3 id="hotel-results-title" style="font-size:1.2rem;font-weight:700;"></h3>
-        </div>
-        <div id="hotel-results-filters"></div>
-        <div class="city-hotels-grid" id="hotel-results-grid"></div>
-      </div>
-    </div>
-
-  </section>
+  <div id="hoteles"></div>
 
   <!-- ============================================================
        VUELOS POPULARES
