@@ -62,11 +62,11 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 /* LOGO */
 .logo { display: flex; align-items: center; flex-shrink: 0; text-decoration: none; }
 .logo-text-wrap { display: flex; flex-direction: column; line-height: 1; }
-.logo-main { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; font-family: 'Baloo Tamma 2', cursive; }
+.logo-main { font-size: 2.1rem; font-weight: 800; letter-spacing: -1px; font-family: 'Baloo Tamma 2', cursive; }
 .logo-blue        { color: #2333c8; }
 .logo-white-main  { color: #fff; }
 .logo-orange      { color: #f7941d; }
-.logo-slogan      { font-size: .65rem; font-weight: 600; color: #f7941d; letter-spacing: .02em; margin-top: 1px; font-family: 'Baloo Tamma 2', cursive; }
+.logo-slogan      { font-size: .8rem; font-weight: 600; color: #f7941d; letter-spacing: .02em; margin-top: 1px; font-family: 'Baloo Tamma 2', cursive; }
 .logo-slogan--white { color: rgba(255,255,255,.7); }
 .logo-img { height: 44px; width: auto; display: block; }
 
