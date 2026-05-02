@@ -21,7 +21,7 @@
       <button class="hamburger hamburger--white" id="hamburger" aria-label="Menú">&#9776;</button>
 
       <!-- LOGO -->
-      <a href="#" class="logo logo--white">
+      <a href="#" class="logo logo--white" onclick="showPage('home'); return false;">
         <div class="logo-text-wrap">
           <div class="logo-main"><span class="logo-white-main">Agenda</span><span class="logo-orange">tur</span></div>
           <div class="logo-slogan logo-slogan--white">Viaja a tu manera</div>
@@ -30,14 +30,14 @@
 
       <!-- LINKS DE NAVEGACIÓN (centro) -->
       <nav class="nav-blue" id="nav">
-        <a href="#" class="sub-link active">Vuelos</a>
-        <a href="#hoteles" class="sub-link">Hoteles</a>
-        <a href="#vuelo-hotel" class="sub-link">Vuelo + Hotel</a>
-        <a href="#paquetes" class="sub-link">Paquetes</a>
-        <a href="#cruceros" class="sub-link">Cruceros</a>
-        <a href="#autos" class="sub-link">Autos</a>
-        <a href="#tours" class="sub-link">Tours</a>
-        <a href="#seguros" class="sub-link">Asistencia</a>
+        <a href="#" class="sub-link active" data-nav="home"       onclick="showPage('home');       return false;">Vuelos</a>
+        <a href="#" class="sub-link"        data-nav="hoteles"    onclick="showPage('hoteles');    return false;">Hoteles</a>
+        <a href="#" class="sub-link"        data-nav="vuelo-hotel" onclick="showPage('vuelo-hotel'); return false;">Vuelo + Hotel</a>
+        <a href="#" class="sub-link"        data-nav="paquetes"   onclick="showPage('paquetes');   return false;">Paquetes</a>
+        <a href="#" class="sub-link"        data-nav="cruceros"   onclick="showPage('home');       return false;">Cruceros</a>
+        <a href="#" class="sub-link"        data-nav="autos"      onclick="showPage('autos');      return false;">Autos</a>
+        <a href="#" class="sub-link"        data-nav="tours"      onclick="showPage('tours');      return false;">Tours</a>
+        <a href="#" class="sub-link"        data-nav="asistencia" onclick="showPage('home');       return false;">Asistencia</a>
         <!-- menú móvil: botones sesión -->
         <div class="nav-auth-mobile" id="nav-auth-mobile">
           <button class="btn btn-login" onclick="openAuthModal('login')">Iniciar sesión</button>
@@ -88,7 +88,7 @@
   <!-- ============================================================
        HERO BANNER + BUSCADOR
        ============================================================ -->
-  <section class="hero-section" id="search">
+  <section class="hero-section" id="search" data-page="home">
     <div class="hero-bg">
       <!-- Imagen de fondo del hero — cambia la URL por tu imagen -->
       <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&auto=format" alt="Avión en vuelo" class="hero-bg-img" />
@@ -411,7 +411,7 @@
   <!-- ============================================================
        BANNER PROMOCIONAL
        ============================================================ -->
-  <section class="promo-banner">
+  <section class="promo-banner" data-page="home">
     <div class="container">
       <div class="promo-grid">
         <div class="promo-card promo-card-blue">
@@ -445,7 +445,7 @@
   <!-- ============================================================
        4 CANALES PRINCIPALES
        ============================================================ -->
-  <section class="section channels-section" id="canales">
+  <section class="section channels-section" id="canales" data-page="home">
     <div class="container">
       <h2 class="section-title">Nuestros 4 canales de viaje</h2>
       <p class="section-sub">Todo lo que necesitas para planificar tu viaje perfecto</p>
@@ -506,7 +506,7 @@
   <!-- ============================================================
        DESTINOS DESTACADOS
        ============================================================ -->
-  <section class="section bg-light" id="destinos">
+  <section class="section bg-light" id="destinos" data-page="home">
     <div class="container">
       <div class="section-header-row">
         <div>
@@ -547,7 +547,7 @@
   <!-- ============================================================
        HOTELES
        ============================================================ -->
-  <section class="section bg-light" id="hoteles">
+  <section class="section bg-light" id="hoteles" data-page="hoteles">
     <div class="container">
       <h2 class="section-title">Hoteles destacados</h2>
       <p class="section-sub">Las mejores tarifas con desayuno incluido y cancelación flexible</p>
@@ -620,7 +620,7 @@
   <!-- ============================================================
        VUELOS POPULARES
        ============================================================ -->
-  <section class="section bg-light" id="vuelos">
+  <section class="section bg-light" id="vuelos" data-page="home">
     <div class="container">
       <h2 class="section-title">Vuelos con mejores precios</h2>
       <p class="section-sub">Rutas más buscadas esta semana · Precios desde por tramo</p>
@@ -668,7 +668,7 @@
   <!-- ============================================================
        PAQUETES TODO INCLUIDO
        ============================================================ -->
-  <section class="section" id="paquetes">
+  <section class="section" id="paquetes" data-page="paquetes">
     <div class="container">
       <h2 class="section-title">Paquetes Todo Incluido</h2>
       <p class="section-sub">Vuelo + Hotel + Tour con precio garantizado</p>
@@ -744,7 +744,7 @@
   <!-- ============================================================
        TOURS
        ============================================================ -->
-  <section class="section bg-light" id="tours">
+  <section class="section bg-light" id="tours" data-page="tours">
     <div class="container">
       <h2 class="section-title">Tours &amp; Experiencias</h2>
       <p class="section-sub">Aventuras únicas guiadas por expertos locales</p>
@@ -816,7 +816,7 @@
   <!-- ============================================================
        RENTA DE AUTOS
        ============================================================ -->
-  <section class="section" id="autos">
+  <section class="section" id="autos" data-page="autos">
     <div class="container">
       <h2 class="section-title">Renta de Autos</h2>
       <p class="section-sub">Flota disponible en más de 180 países y 10 000 ubicaciones</p>
@@ -884,7 +884,7 @@
   <!-- ============================================================
        POR QUÉ ELEGIRNOS
        ============================================================ -->
-  <section class="why-section">
+  <section class="why-section" data-page="home">
     <div class="container">
       <h2 class="section-title white">¿Por qué elegir AgendaTur?</h2>
       <div class="why-grid">
@@ -901,7 +901,7 @@
   <!-- ============================================================
        SECCIÓN VUELO + HOTEL (canal especial)
        ============================================================ -->
-  <section class="section bg-light" id="vuelo-hotel">
+  <section class="section bg-light" id="vuelo-hotel" data-page="vuelo-hotel">
     <div class="container">
       <div class="combo-section">
         <div class="combo-text">
@@ -925,7 +925,7 @@
   <!-- ============================================================
        CONTACTO
        ============================================================ -->
-  <section class="section" id="contacto">
+  <section class="section" id="contacto" data-page="home">
     <div class="container contact-layout">
       <div class="contact-left">
         <h2 class="section-title left">¿Listo para tu próximo viaje?</h2>

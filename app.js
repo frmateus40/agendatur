@@ -2,6 +2,21 @@
    AgendaTur — app.js
    ============================================= */
 
+// ---------- NAVEGACIÓN SPA ----------
+function showPage(page) {
+  document.querySelectorAll('[data-page]').forEach(el => {
+    el.style.display = el.getAttribute('data-page') === page ? '' : 'none';
+  });
+  if (page === 'home') {
+    document.getElementById('flight-results-section').style.display = 'none';
+    document.getElementById('results-section').style.display = 'none';
+  }
+  window.scrollTo(0, 0);
+  document.querySelectorAll('.nav-blue .sub-link').forEach(a => a.classList.remove('active'));
+  const active = document.querySelector(`.nav-blue .sub-link[data-nav="${page}"]`);
+  if (active) active.classList.add('active');
+}
+
 // ---------- BASE DE CIUDADES MUNDIALES ----------
 const worldCities = [
   // América Latina
