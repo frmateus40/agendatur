@@ -72,7 +72,7 @@ input, select, textarea, button { font-family: inherit; font-size: inherit; }
 
 /* Nav azul (links en la barra) */
 .nav-blue {
-  display: flex; align-items: center; justify-content: flex-end; flex: 1; overflow-x: auto;
+  display: flex; align-items: center; justify-content: center; flex: 1; overflow-x: auto;
   scrollbar-width: none; -ms-overflow-style: none;
 }
 .nav-blue::-webkit-scrollbar { display: none; }
