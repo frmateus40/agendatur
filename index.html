@@ -31,7 +31,7 @@
       <!-- LINKS DE NAVEGACIÓN (centro) -->
       <nav class="nav-blue" id="nav">
         <a href="#" class="sub-link active">Vuelos</a>
-        <a href="#" class="sub-link" onclick="scrollToSearch('tab-hoteles'); return false;">Hoteles</a>
+        <a href="#hoteles" class="sub-link">Hoteles</a>
         <a href="#vuelo-hotel" class="sub-link">Vuelo + Hotel</a>
         <a href="#paquetes" class="sub-link">Paquetes</a>
         <a href="#cruceros" class="sub-link">Cruceros</a>
@@ -545,9 +545,77 @@
   </section>
 
   <!-- ============================================================
-       HOTELES — BUSCADOR + RESULTADOS
+       HOTELES
        ============================================================ -->
-  <div id="hoteles"></div>
+  <section class="section bg-light" id="hoteles">
+    <div class="container">
+      <h2 class="section-title">Hoteles destacados</h2>
+      <p class="section-sub">Las mejores tarifas con desayuno incluido y cancelación flexible</p>
+      <div class="packages-grid">
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600')">
+            <span class="pkg-tag">⭐⭐⭐⭐⭐ 5 estrellas</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">📍 <strong>Cancún</strong> · México</div>
+            <h3>Grand Hyatt Cancún</h3>
+            <ul class="pkg-inc">
+              <li>🍳 Desayuno buffet incluido</li>
+              <li>🏊 Piscina infinita frente al mar</li>
+              <li>📶 Wi-Fi gratuito en toda la propiedad</li>
+              <li>🧖 Spa &amp; centro de bienestar</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="pkg-price">$189</span><small>/noche</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Grand Hyatt Cancún')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600')">
+            <span class="pkg-tag pkg-tag-blue">⭐⭐⭐⭐ 4 estrellas</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">📍 <strong>Cartagena</strong> · Colombia</div>
+            <h3>Hotel Sofitel Legend</h3>
+            <ul class="pkg-inc">
+              <li>🍳 Desayuno continental incluido</li>
+              <li>🏊 Piscina con vista al mar Caribe</li>
+              <li>📶 Wi-Fi de alta velocidad</li>
+              <li>🍽️ Restaurante gourmet en la terraza</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="pkg-price">$145</span><small>/noche</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Hotel Sofitel Legend')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pkg-card">
+          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600')">
+            <span class="pkg-tag pkg-tag-green">⭐⭐⭐⭐⭐ Boutique</span>
+          </div>
+          <div class="pkg-body">
+            <div class="pkg-dest-row">📍 <strong>Cusco</strong> · Perú</div>
+            <h3>Inkaterra La Casona</h3>
+            <ul class="pkg-inc">
+              <li>🍳 Desayuno andino incluido</li>
+              <li>🌿 Jardines coloniales privados</li>
+              <li>📶 Wi-Fi en todas las habitaciones</li>
+              <li>🧭 Tours a Machu Picchu disponibles</li>
+            </ul>
+            <div class="pkg-pricing">
+              <div><span class="pkg-price">$220</span><small>/noche</small></div>
+              <button class="btn btn-primary" onclick="bookItem('Inkaterra La Casona')">Reservar</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- ============================================================
        VUELOS POPULARES
