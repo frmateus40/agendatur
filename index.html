@@ -549,73 +549,348 @@
        ============================================================ -->
   <section class="section bg-light" id="hoteles" data-page="hoteles">
     <div class="container">
-      <h2 class="section-title">Hoteles destacados</h2>
-      <p class="section-sub">Las mejores tarifas con desayuno incluido y cancelación flexible</p>
-      <div class="packages-grid">
+      <h2 class="section-title">Hoteles — Colombia y el Mundo</h2>
+      <p class="section-sub">Consulta disponibilidad y nuestros asesores te responden con la mejor tarifa</p>
+      <div class="hotels-grid">
 
-        <div class="pkg-card">
-          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600')">
-            <span class="pkg-tag">⭐⭐⭐⭐⭐ 5 estrellas</span>
+        <!-- ── COLOMBIA ── -->
+        <div class="hotel-region">🇨🇴 Colombia</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600')">
+            <span class="hotel-stars">★★★★★</span>
           </div>
-          <div class="pkg-body">
-            <div class="pkg-dest-row">📍 <strong>Cancún</strong> · México</div>
-            <h3>Grand Hyatt Cancún</h3>
-            <ul class="pkg-inc">
-              <li>🍳 Desayuno buffet incluido</li>
-              <li>🏊 Piscina infinita frente al mar</li>
-              <li>📶 Wi-Fi gratuito en toda la propiedad</li>
-              <li>🧖 Spa &amp; centro de bienestar</li>
-            </ul>
-            <div class="pkg-pricing">
-              <div><span class="pkg-price">$189</span><small>/noche</small></div>
-              <button class="btn btn-primary" onclick="bookItem('Grand Hyatt Cancún')">Reservar</button>
-            </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Cartagena de Indias · Colombia</div>
+            <div class="hotel-name">Hotel Casa San Agustín</div>
+            <ul class="hotel-amenities"><li>Piscina</li><li>Spa</li><li>Desayuno</li><li>Vista mar</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Hotel Casa San Agustín — Cartagena')">Consultar disponibilidad</button>
           </div>
         </div>
 
-        <div class="pkg-card">
-          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600')">
-            <span class="pkg-tag pkg-tag-blue">⭐⭐⭐⭐ 4 estrellas</span>
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=600')">
+            <span class="hotel-stars">★★★★★</span>
           </div>
-          <div class="pkg-body">
-            <div class="pkg-dest-row">📍 <strong>Cartagena</strong> · Colombia</div>
-            <h3>Hotel Sofitel Legend</h3>
-            <ul class="pkg-inc">
-              <li>🍳 Desayuno continental incluido</li>
-              <li>🏊 Piscina con vista al mar Caribe</li>
-              <li>📶 Wi-Fi de alta velocidad</li>
-              <li>🍽️ Restaurante gourmet en la terraza</li>
-            </ul>
-            <div class="pkg-pricing">
-              <div><span class="pkg-price">$145</span><small>/noche</small></div>
-              <button class="btn btn-primary" onclick="bookItem('Hotel Sofitel Legend')">Reservar</button>
-            </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Medellín · Colombia</div>
+            <div class="hotel-name">Dann Carlton Medellín</div>
+            <ul class="hotel-amenities"><li>Piscina</li><li>Gimnasio</li><li>Restaurante</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Dann Carlton — Medellín')">Consultar disponibilidad</button>
           </div>
         </div>
 
-        <div class="pkg-card">
-          <div class="pkg-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600')">
-            <span class="pkg-tag pkg-tag-green">⭐⭐⭐⭐⭐ Boutique</span>
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1445019980597-93fa8acb246c?w=600')">
+            <span class="hotel-stars">★★★★★</span>
           </div>
-          <div class="pkg-body">
-            <div class="pkg-dest-row">📍 <strong>Cusco</strong> · Perú</div>
-            <h3>Inkaterra La Casona</h3>
-            <ul class="pkg-inc">
-              <li>🍳 Desayuno andino incluido</li>
-              <li>🌿 Jardines coloniales privados</li>
-              <li>📶 Wi-Fi en todas las habitaciones</li>
-              <li>🧭 Tours a Machu Picchu disponibles</li>
-            </ul>
-            <div class="pkg-pricing">
-              <div><span class="pkg-price">$220</span><small>/noche</small></div>
-              <button class="btn btn-primary" onclick="bookItem('Inkaterra La Casona')">Reservar</button>
-            </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Bogotá · Colombia</div>
+            <div class="hotel-name">Casa Medina Bogotá</div>
+            <ul class="hotel-amenities"><li>Boutique</li><li>Bar</li><li>Desayuno</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Casa Medina — Bogotá')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1537953773345-d172ccf13cf1?w=600')">
+            <span class="hotel-stars">★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">San Andrés · Colombia</div>
+            <div class="hotel-name">Decameron Aquarium</div>
+            <ul class="hotel-amenities"><li>Todo incluido</li><li>Playa</li><li>Snorkel</li><li>Piscina</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Decameron Aquarium — San Andrés')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600')">
+            <span class="hotel-stars">★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Santa Marta · Colombia</div>
+            <div class="hotel-name">Irotama Resort</div>
+            <ul class="hotel-amenities"><li>Playa privada</li><li>Piscina</li><li>Restaurante</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Irotama Resort — Santa Marta')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Cali · Colombia</div>
+            <div class="hotel-name">GHL Collection Palacio</div>
+            <ul class="hotel-amenities"><li>Spa</li><li>Piscina</li><li>Restaurante</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('GHL Collection Palacio — Cali')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <!-- ── CARIBE & MÉXICO ── -->
+        <div class="hotel-region">🌴 Caribe & México</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Punta Cana · Rep. Dominicana</div>
+            <div class="hotel-name">Hard Rock Hotel & Casino</div>
+            <ul class="hotel-amenities"><li>Todo incluido</li><li>Casino</li><li>Playa</li><li>Spa</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Hard Rock Hotel & Casino — Punta Cana')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Cancún · México</div>
+            <div class="hotel-name">Grand Hyatt Cancún</div>
+            <ul class="hotel-amenities"><li>Piscina infinita</li><li>Playa</li><li>Spa</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Grand Hyatt — Cancún')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1512100356356-de1b84283e18?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Riviera Maya · México</div>
+            <div class="hotel-name">Excellence Playa Mujeres</div>
+            <ul class="hotel-amenities"><li>Solo adultos</li><li>Todo incluido</li><li>Playa</li><li>Spa</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Excellence Playa Mujeres — Riviera Maya')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <!-- ── NORTEAMÉRICA ── -->
+        <div class="hotel-region">🗽 Norteamérica</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Miami · Estados Unidos</div>
+            <div class="hotel-name">InterContinental Miami</div>
+            <ul class="hotel-amenities"><li>Vista bahía</li><li>Piscina rooftop</li><li>Spa</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('InterContinental — Miami')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">New York · Estados Unidos</div>
+            <div class="hotel-name">The Peninsula New York</div>
+            <ul class="hotel-amenities"><li>5.ª Avenida</li><li>Spa</li><li>Rooftop bar</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('The Peninsula — New York')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1467269204594-9661b134dd2b?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Las Vegas · Estados Unidos</div>
+            <div class="hotel-name">The Venetian Resort</div>
+            <ul class="hotel-amenities"><li>Casino</li><li>Spa</li><li>Piscina</li><li>Shows</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('The Venetian Resort — Las Vegas')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <!-- ── SURAMÉRICA ── -->
+        <div class="hotel-region">🌎 Suramérica</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1499856871958-5b9357976b82?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Buenos Aires · Argentina</div>
+            <div class="hotel-name">Alvear Palace Hotel</div>
+            <ul class="hotel-amenities"><li>Palermo</li><li>Spa</li><li>Desayuno</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Alvear Palace Hotel — Buenos Aires')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Lima · Perú</div>
+            <div class="hotel-name">Belmond Miraflores Park</div>
+            <ul class="hotel-amenities"><li>Vista al mar</li><li>Spa</li><li>Piscina</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Belmond Miraflores Park — Lima')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1493246507139-91e8fad9978e?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Santiago · Chile</div>
+            <div class="hotel-name">Hyatt Centric Las Condes</div>
+            <ul class="hotel-amenities"><li>Vista cordillera</li><li>Piscina</li><li>Restaurante</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Hyatt Centric Las Condes — Santiago')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <!-- ── EUROPA ── -->
+        <div class="hotel-region">🌍 Europa</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1534430480872-3498386e7856?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Barcelona · España</div>
+            <div class="hotel-name">Hotel Arts Barcelona</div>
+            <ul class="hotel-amenities"><li>Vista mar</li><li>Spa</li><li>Piscina</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Hotel Arts — Barcelona')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1538970272646-f61fabb3a8a2?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Madrid · España</div>
+            <div class="hotel-name">The Ritz Madrid</div>
+            <ul class="hotel-amenities"><li>Museo del Prado</li><li>Spa</li><li>Jardín</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('The Ritz — Madrid')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">París · Francia</div>
+            <div class="hotel-name">Le Bristol Paris</div>
+            <ul class="hotel-amenities"><li>Torre Eiffel</li><li>Spa</li><li>Piscina</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Le Bristol — París')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <!-- ── ASIA & MEDIO ORIENTE ── -->
+        <div class="hotel-region">✈ Asia & Medio Oriente</div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Dubai · Emiratos Árabes</div>
+            <div class="hotel-name">Atlantis The Palm</div>
+            <ul class="hotel-amenities"><li>Parque acuático</li><li>Playa</li><li>Casino</li><li>Spa</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Atlantis The Palm — Dubai')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Singapur</div>
+            <div class="hotel-name">Marina Bay Sands</div>
+            <ul class="hotel-amenities"><li>Piscina infinita</li><li>Casino</li><li>Shows</li><li>Wi-Fi</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Marina Bay Sands — Singapur')">Consultar disponibilidad</button>
+          </div>
+        </div>
+
+        <div class="hotel-card">
+          <div class="hotel-img" style="background-image:url('https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600')">
+            <span class="hotel-stars">★★★★★</span>
+          </div>
+          <div class="hotel-body">
+            <div class="hotel-location">Maldivas</div>
+            <div class="hotel-name">Soneva Fushi Resort</div>
+            <ul class="hotel-amenities"><li>Bungalow sobre el agua</li><li>Snorkel</li><li>Spa</li><li>Todo incluido</li></ul>
+            <button class="btn btn-primary" onclick="openHotelModal('Soneva Fushi Resort — Maldivas')">Consultar disponibilidad</button>
           </div>
         </div>
 
       </div>
     </div>
   </section>
+
+  <!-- MODAL CONSULTA DE HOTEL -->
+  <div class="hotel-modal-overlay" id="modal-hotel" onclick="if(event.target===this)closeHotelModal()">
+    <div class="hotel-modal-box">
+      <button class="hm-close" onclick="closeHotelModal()">✕</button>
+      <h3>Consultar disponibilidad</h3>
+      <p class="hm-subtitle" id="hm-hotel-name"></p>
+      <form id="form-hotel" onsubmit="submitHotelForm(event)">
+        <input type="hidden" id="h-hotel" />
+        <div class="hm-field">
+          <label>Nombre completo *</label>
+          <input type="text" id="h-nombre" required placeholder="Tu nombre completo" />
+        </div>
+        <div class="hm-row">
+          <div class="hm-field">
+            <label>Correo electrónico *</label>
+            <input type="email" id="h-correo" required placeholder="correo@ejemplo.com" />
+          </div>
+          <div class="hm-field">
+            <label>Teléfono / WhatsApp *</label>
+            <input type="tel" id="h-tel" required placeholder="+57 300 000 0000" />
+          </div>
+        </div>
+        <div class="hm-row">
+          <div class="hm-field">
+            <label>Fecha de entrada *</label>
+            <input type="date" id="h-entrada" required />
+          </div>
+          <div class="hm-field">
+            <label>Fecha de salida *</label>
+            <input type="date" id="h-salida" required />
+          </div>
+        </div>
+        <div class="hm-row">
+          <div class="hm-field">
+            <label>Adultos *</label>
+            <select id="h-adultos">
+              <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
+            </select>
+          </div>
+          <div class="hm-field">
+            <label>Niños</label>
+            <select id="h-ninos">
+              <option selected>0</option><option>1</option><option>2</option><option>3</option><option>4+</option>
+            </select>
+          </div>
+        </div>
+        <div class="hm-field">
+          <label>Tipo de habitación</label>
+          <select id="h-hab">
+            <option>Sencilla</option>
+            <option selected>Doble / Twin</option>
+            <option>Junior Suite</option>
+            <option>Suite</option>
+            <option>Penthouse</option>
+          </select>
+        </div>
+        <div class="hm-field">
+          <label>Comentarios adicionales</label>
+          <textarea id="h-comentarios" rows="3" placeholder="Ocasión especial, preferencias, alergias…"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary full-width" style="margin-top:8px;">Enviar consulta ✈</button>
+      </form>
+    </div>
+  </div>
 
   <!-- ============================================================
        VUELOS POPULARES

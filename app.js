@@ -17,6 +17,52 @@ function showPage(page) {
   if (active) active.classList.add('active');
 }
 
+// ---------- MODAL CONSULTA HOTEL ----------
+function openHotelModal(hotel) {
+  document.getElementById('h-hotel').value = hotel;
+  document.getElementById('hm-hotel-name').textContent = hotel;
+  document.getElementById('modal-hotel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeHotelModal() {
+  document.getElementById('modal-hotel').classList.remove('open');
+  document.getElementById('form-hotel').reset();
+  document.body.style.overflow = '';
+}
+
+function submitHotelForm(e) {
+  e.preventDefault();
+  const hotel    = document.getElementById('h-hotel').value;
+  const nombre   = document.getElementById('h-nombre').value;
+  const correo   = document.getElementById('h-correo').value;
+  const tel      = document.getElementById('h-tel').value;
+  const entrada  = document.getElementById('h-entrada').value;
+  const salida   = document.getElementById('h-salida').value;
+  const adultos  = document.getElementById('h-adultos').value;
+  const ninos    = document.getElementById('h-ninos').value;
+  const hab      = document.getElementById('h-hab').value;
+  const coment   = document.getElementById('h-comentarios').value;
+
+  const body = [
+    `Hotel: ${hotel}`,
+    `Nombre: ${nombre}`,
+    `Correo: ${correo}`,
+    `Teléfono: ${tel}`,
+    `Fecha de entrada: ${entrada}`,
+    `Fecha de salida: ${salida}`,
+    `Adultos: ${adultos}`,
+    `Niños: ${ninos}`,
+    `Habitación: ${hab}`,
+    coment ? `Comentarios: ${coment}` : ''
+  ].filter(Boolean).join('\n');
+
+  window.location.href =
+    `mailto:viajes@agendatur.onmicrosoft.com?subject=${encodeURIComponent('Consulta de hotel: ' + hotel)}&body=${encodeURIComponent(body)}`;
+
+  closeHotelModal();
+}
+
 // ---------- BASE DE CIUDADES MUNDIALES ----------
 const worldCities = [
   // América Latina
