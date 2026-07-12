@@ -1,0 +1,215 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1f2937;
+
+  /* Paleta de marca Agendatur */
+  --brand-primary: #0b3d91;
+  --brand-primary-medium: #1e6fd9;
+  --brand-accent: #f26522;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-brand-primary: var(--brand-primary);
+  --color-brand-primary-medium: var(--brand-primary-medium);
+  --color-brand-accent: var(--brand-accent);
+  --font-sans: var(--font-inter);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.2s ease-out;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate-modal-in {
+  animation: modal-in 0.2s ease-out;
+}
+
+/* ── Loader: globo + avión orbitando ── */
+
+.globe-loader-overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.globe-loader-overlay[data-visible="true"] {
+  opacity: 1;
+}
+
+@keyframes globe-spin {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-110px);
+  }
+}
+
+@keyframes plane-orbit {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes plane-depth {
+  0%,
+  45% {
+    opacity: 1;
+  }
+  50%,
+  95% {
+    opacity: 0.32;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes trail-flow {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+
+@keyframes progress-indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(220%);
+  }
+}
+
+/* 4 mensajes, 2.5s cada uno = 10s por vuelta completa (ver animation-delay en cada span) */
+@keyframes text-swap {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  3% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  22% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  25%,
+  100% {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+.globe-band {
+  animation: none;
+}
+
+.orbit-plane {
+  offset-rotate: auto;
+  opacity: 1;
+}
+
+.orbit-trail-flow {
+  animation: none;
+}
+
+.progress-indeterminate-bar {
+  animation: none;
+  transform: translateX(-100%);
+}
+
+.globe-loader-text-rotator {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 20rem;
+  min-height: 1.4em;
+}
+
+.globe-loader-text-rotator span {
+  display: block;
+  width: 100%;
+  text-align: center;
+  opacity: 0;
+}
+
+.globe-loader-text-rotator span:first-child {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .globe-band {
+    animation: globe-spin 7s linear infinite;
+  }
+
+  .orbit-plane {
+    animation: plane-orbit 6s linear infinite, plane-depth 6s linear infinite;
+  }
+
+  .orbit-trail-flow {
+    animation: trail-flow 1.4s linear infinite;
+  }
+
+  .progress-indeterminate-bar {
+    animation: progress-indeterminate 1.6s ease-in-out infinite;
+  }
+
+  .globe-loader-text-rotator span {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    animation: text-swap 10s linear infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-loader-text-rotator span {
+    animation: none !important;
+    opacity: 1 !important;
+    position: static !important;
+    transform: none !important;
+  }
+
+  .globe-loader-text-rotator span:not(:first-child) {
+    display: none;
+  }
+}
