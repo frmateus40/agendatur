@@ -107,7 +107,7 @@ export default function QuoteForm({ tripSummary }: QuoteFormProps) {
     formData.append("_template", "table");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/viajes@agendatur.onmicrosoft.com", {
+      const res = await fetch("https://formsubmit.co/ajax/asesor@viajesagendatur.com", {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
@@ -120,7 +120,7 @@ export default function QuoteForm({ tripSummary }: QuoteFormProps) {
     } catch {
       // Fallback: abrir el cliente de correo con todo prellenado.
       const body = `${buildMessage()}`;
-      window.location.href = `mailto:viajes@agendatur.onmicrosoft.com?subject=${encodeURIComponent(
+      window.location.href = `mailto:asesor@viajesagendatur.com?subject=${encodeURIComponent(
         `Solicitud de cotización — ${tripSummary.service}`
       )}&body=${encodeURIComponent(body)}`;
       setEmailStatus("error");
@@ -251,7 +251,7 @@ export default function QuoteForm({ tripSummary }: QuoteFormProps) {
       </div>
       {emailStatus === "error" && (
         <p className="text-xs text-gray-500">
-          Abrimos tu cliente de correo para que envíes la solicitud directamente a viajes@agendatur.onmicrosoft.com.
+          Abrimos tu cliente de correo para que envíes la solicitud directamente a asesor@viajesagendatur.com.
         </p>
       )}
     </div>

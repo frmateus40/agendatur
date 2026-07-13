@@ -7,6 +7,8 @@ import TrustStrip from "@/components/TrustStrip";
 import CategoryExplorer from "@/components/categories/CategoryExplorer";
 import TipsSection from "@/components/TipsSection";
 import Footer from "@/components/Footer";
+import { CITIES } from "@/data/cities";
+import { SITE_URL } from "@/data/seo";
 
 export const metadata: Metadata = {
   title: "Agendatur — Agencia de viajes digital en Colombia",
@@ -15,9 +17,23 @@ export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
 
+const homeTravelAgencyJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TravelAgency",
+  name: "Agendatur",
+  url: SITE_URL,
+  telephone: "+573102276645",
+  areaServed: CITIES.map((city) => city.name),
+  sameAs: [],
+};
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeTravelAgencyJsonLd) }}
+      />
       <Header />
       <main className="flex-1">
         <HeroCarousel />

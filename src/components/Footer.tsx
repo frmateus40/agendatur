@@ -1,9 +1,3 @@
-"use client";
-
-import { useState } from "react";
-import Modal from "./Modal";
-import PQRSForm from "./footer/PQRSForm";
-
 function IconFacebook({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -51,8 +45,6 @@ function IconClipboard({ className }: { className?: string }) {
 }
 
 export default function Footer() {
-  const [pqrsOpen, setPqrsOpen] = useState(false);
-
   return (
     <footer id="contacto" className="scroll-mt-24 bg-brand-primary text-blue-100">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
@@ -98,14 +90,13 @@ export default function Footer() {
             <li><a href="/cruceros" className="hover:text-white">Cruceros desde Colombia</a></li>
             <li><a href="/nosotros" className="hover:text-white">Nosotros</a></li>
             <li>
-              <button
-                type="button"
-                onClick={() => setPqrsOpen(true)}
+              <a
+                href="/pqrs"
                 className="inline-flex items-center gap-1.5 font-semibold text-white hover:text-brand-accent"
               >
                 <IconClipboard className="h-4 w-4" />
                 PQRS
-              </button>
+              </a>
             </li>
           </ul>
         </div>
@@ -115,9 +106,9 @@ export default function Footer() {
             Información legal
           </h4>
           <ul className="space-y-2 text-sm text-blue-100/90">
-            <li><a href="#" className="hover:text-white">Términos y condiciones</a></li>
-            <li><a href="#" className="hover:text-white">Política de privacidad</a></li>
-            <li><a href="#" className="hover:text-white">Derechos del pasajero</a></li>
+            <li><a href="/terminos-y-condiciones" className="hover:text-white">Términos y condiciones</a></li>
+            <li><a href="/politica-de-privacidad" className="hover:text-white">Política de privacidad</a></li>
+            <li><a href="/derechos-del-pasajero" className="hover:text-white">Derechos del pasajero</a></li>
             <li className="pt-1 text-xs text-blue-100/70">RNT: 279917</li>
           </ul>
         </div>
@@ -133,8 +124,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:viajes@agendatur.onmicrosoft.com" className="hover:text-white">
-                viajes@agendatur.onmicrosoft.com
+              <a href="mailto:asesor@viajesagendatur.com" className="hover:text-white">
+                asesor@viajesagendatur.com
               </a>
             </li>
           </ul>
@@ -154,10 +145,6 @@ export default function Footer() {
           Todos los derechos reservados.
         </p>
       </div>
-
-      <Modal open={pqrsOpen} onClose={() => setPqrsOpen(false)} title="PQRS — Peticiones, Quejas, Reclamos y Sugerencias">
-        <PQRSForm />
-      </Modal>
     </footer>
   );
 }

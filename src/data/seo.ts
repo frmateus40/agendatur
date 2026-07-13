@@ -30,7 +30,7 @@ export const BUSINESS_INFO = {
   rnt: "279917",
   country: "CO",
   countryName: "Colombia",
-  email: "viajes@agendatur.onmicrosoft.com",
+  email: "asesor@viajesagendatur.com",
   whatsappNumber: "+573102276645",
   whatsappDisplay: "310 227 6645",
   logo: "/agendatur-logo.jpg",

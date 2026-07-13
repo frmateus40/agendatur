@@ -73,7 +73,7 @@ export default function PQRSForm() {
     formData.append("_template", "table");
 
     try {
-      const res = await fetch("https://formsubmit.co/ajax/viajes@agendatur.onmicrosoft.com", {
+      const res = await fetch("https://formsubmit.co/ajax/asesor@viajesagendatur.com", {
         method: "POST",
         headers: { Accept: "application/json" },
         body: formData,
@@ -85,7 +85,7 @@ export default function PQRSForm() {
       setStatus("sent");
     } catch {
       const body = `Tipo de solicitud: ${type}\nNombre: ${name}\nCorreo: ${email}\nTeléfono/WhatsApp: ${phone || "No indicado"}\n\nMensaje:\n${message}`;
-      window.location.href = `mailto:viajes@agendatur.onmicrosoft.com?subject=${encodeURIComponent(
+      window.location.href = `mailto:asesor@viajesagendatur.com?subject=${encodeURIComponent(
         `PQRS - ${type}`
       )}&body=${encodeURIComponent(body)}`;
       setStatus("sent");

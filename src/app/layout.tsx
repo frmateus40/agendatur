@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Poppins } from "next/font/google";
 import Script from "next/script";
 import WhatsAppFloatButton from "@/components/WhatsAppFloatButton";
 import { SearchTabProvider } from "@/contexts/SearchTabContext";
@@ -9,6 +9,14 @@ import "./globals.css";
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+});
+
+// Fuente de títulos para las landing pages nuevas (clase utilitaria
+// "font-poppins"). El resto del sitio sigue usando Inter sin cambios.
+const poppins = Poppins({
+  variable: "--font-poppins",
+  subsets: ["latin"],
+  weight: ["600", "700", "800"],
 });
 
 const DEFAULT_TITLE = "Agendatur | Agencia de viajes digital en Colombia - Paquetes y planes a la medida";
@@ -92,7 +100,7 @@ export default function RootLayout({
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
-    <html lang="es" className={`${inter.variable} h-full antialiased`}>
+    <html lang="es" className={`${inter.variable} ${poppins.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col font-sans">
         <script
           type="application/ld+json"
