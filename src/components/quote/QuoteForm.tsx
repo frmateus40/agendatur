@@ -85,7 +85,7 @@ export default function QuoteForm({ tripSummary }: QuoteFormProps) {
 
     registerLead("quote-whatsapp");
     setWaSent(true);
-    window.open(`https://wa.me/573102276045?text=${encodeURIComponent(buildMessage())}`, "_blank");
+    window.open(`https://wa.me/573102276645?text=${encodeURIComponent(buildMessage())}`, "_blank");
   }
 
   async function handleEmail() {

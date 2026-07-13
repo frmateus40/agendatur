@@ -78,7 +78,7 @@ export default function Footer() {
               <IconInstagram className="h-4 w-4" />
             </a>
             <a
-              href="https://wa.me/573102276045"
+              href="https://wa.me/573102276645"
               aria-label="WhatsApp"
               className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
             >
@@ -128,8 +128,8 @@ export default function Footer() {
           </h4>
           <ul className="space-y-2 text-sm text-blue-100/90">
             <li>
-              <a href="https://wa.me/573102276045" className="hover:text-white">
-                WhatsApp: 310 227 6045
+              <a href="https://wa.me/573102276645" className="hover:text-white">
+                WhatsApp: 310 227 6645
               </a>
             </li>
             <li>

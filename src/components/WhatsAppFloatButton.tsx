@@ -1,4 +1,4 @@
-const WHATSAPP_NUMBER = "573102276045";
+const WHATSAPP_NUMBER = "573102276645";
 
 export default function WhatsAppFloatButton() {
   return (

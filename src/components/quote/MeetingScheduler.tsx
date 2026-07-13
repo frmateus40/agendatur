@@ -64,7 +64,7 @@ export default function MeetingScheduler({ tripSummary }: MeetingSchedulerProps)
           <code className="rounded bg-gray-100 px-1 py-0.5">.env.local</code>.
         </p>
         <a
-          href="https://wa.me/573102276045"
+          href="https://wa.me/573102276645"
           target="_blank"
           rel="noopener noreferrer"
           className="mt-1 rounded-lg bg-brand-accent px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600"
