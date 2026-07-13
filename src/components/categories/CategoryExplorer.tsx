@@ -27,7 +27,8 @@ export default function CategoryExplorer() {
       <div className="text-center">
         <h2 className="text-2xl font-extrabold text-gray-900 md:text-4xl">Descubre por categoría</h2>
         <p className="mx-auto mt-3 max-w-xl text-sm text-gray-500 md:text-base">
-          Elige el tipo de viaje que sueñas y descubre nuestros destinos.
+          Elige el tipo de plan de viaje que sueñas — nacionales, internacionales, cruceros
+          desde Colombia o experiencias deluxe — y descubre nuestros destinos.
         </p>
       </div>
 
@@ -75,7 +76,7 @@ export default function CategoryExplorer() {
                 <div className="relative aspect-[4/3]">
                   <Image
                     src={dest.image}
-                    alt={dest.name}
+                    alt={dest.imageAlt}
                     fill
                     loading="lazy"
                     sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
@@ -99,6 +100,16 @@ export default function CategoryExplorer() {
                 </div>
               </div>
             ))}
+          </div>
+        )}
+        {activeCategory?.id === "cruceros" && (
+          <div className="mt-6 text-center">
+            <a
+              href="/cruceros"
+              className="inline-block rounded-lg border-2 border-brand-primary px-6 py-2.5 text-sm font-semibold text-brand-primary transition-colors hover:bg-brand-primary hover:text-white"
+            >
+              Ver todos los cruceros
+            </a>
           </div>
         )}
       </Modal>

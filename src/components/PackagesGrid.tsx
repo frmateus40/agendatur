@@ -18,17 +18,24 @@ function buildTripSummary(pkg: TravelPackage): TripSummary {
   };
 }
 
-export default function PackagesGrid() {
+interface PackagesGridProps {
+  headingLevel?: "h1" | "h2";
+  showViewAllLink?: boolean;
+}
+
+export default function PackagesGrid({ headingLevel = "h2", showViewAllLink = true }: PackagesGridProps) {
   const [tripSummary, setTripSummary] = useState<TripSummary | null>(null);
+  const Heading = headingLevel;
 
   return (
     <section id="paquetes" className="mx-auto max-w-7xl px-4 py-16 md:py-20">
       <div className="text-center">
-        <h2 className="text-2xl font-extrabold text-gray-900 md:text-4xl">
-          Paquetes destacados
-        </h2>
+        <Heading className="text-2xl font-extrabold text-gray-900 md:text-4xl">
+          Paquetes turísticos destacados
+        </Heading>
         <p className="mx-auto mt-3 max-w-xl text-sm text-gray-500 md:text-base">
-          Ejemplos de paquetes — se actualizarán con las tarifas y destinos reales de la agencia.
+          Planes de viaje y paquetes todo incluido — ejemplos que se actualizarán con las
+          tarifas y destinos reales de la agencia.
         </p>
       </div>
 
@@ -41,7 +48,7 @@ export default function PackagesGrid() {
             <div className="relative aspect-[4/3] overflow-hidden">
               <Image
                 src={pkg.image}
-                alt={pkg.destination}
+                alt={pkg.imageAlt}
                 fill
                 loading="lazy"
                 sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
@@ -71,14 +78,16 @@ export default function PackagesGrid() {
         ))}
       </div>
 
-      <div className="mt-12 text-center">
-        <a
-          href="#categorias"
-          className="inline-block rounded-lg border-2 border-brand-primary px-8 py-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-brand-primary hover:text-white"
-        >
-          Ver todos los paquetes
-        </a>
-      </div>
+      {showViewAllLink && (
+        <div className="mt-12 text-center">
+          <a
+            href="/paquetes"
+            className="inline-block rounded-lg border-2 border-brand-primary px-8 py-3 text-sm font-semibold text-brand-primary transition-colors hover:bg-brand-primary hover:text-white"
+          >
+            Ver todos los paquetes
+          </a>
+        </div>
+      )}
 
       {tripSummary && (
         <QuoteModal open={tripSummary !== null} onClose={() => setTripSummary(null)} tripSummary={tripSummary} />

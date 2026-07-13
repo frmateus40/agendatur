@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useSearchTab, TAB_SLUGS, type SearchTabId } from "@/contexts/SearchTabContext";
 
 interface NavItem {
@@ -11,30 +12,30 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Inicio", href: "#inicio" },
-  { label: "Vuelos", href: `#${TAB_SLUGS.flights}`, tabId: "flights" },
-  { label: "Hoteles", href: `#${TAB_SLUGS.hotels}`, tabId: "hotels" },
-  { label: "Autos", href: `#${TAB_SLUGS.cars}`, tabId: "cars" },
-  { label: "Tours", href: `#${TAB_SLUGS.tours}`, tabId: "tours" },
-  { label: "Vuelos + Hotel", href: `#${TAB_SLUGS["flight-hotel"]}`, tabId: "flight-hotel" },
-  { label: "Nosotros", href: "#nosotros" },
+  { label: "Inicio", href: "/#inicio" },
+  { label: "Vuelos", href: `/#${TAB_SLUGS.flights}`, tabId: "flights" },
+  { label: "Hoteles", href: `/#${TAB_SLUGS.hotels}`, tabId: "hotels" },
+  { label: "Autos", href: `/#${TAB_SLUGS.cars}`, tabId: "cars" },
+  { label: "Tours", href: `/#${TAB_SLUGS.tours}`, tabId: "tours" },
+  { label: "Vuelos + Hotel", href: `/#${TAB_SLUGS["flight-hotel"]}`, tabId: "flight-hotel" },
+  { label: "Nosotros", href: "/nosotros" },
 ];
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [buscadorInView, setBuscadorInView] = useState(false);
-  const [nosotrosInView, setNosotrosInView] = useState(false);
   const { activeTab, setActiveTab } = useSearchTab();
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
+    if (!isHome) return;
     const buscador = document.getElementById("buscador");
-    const nosotros = document.getElementById("nosotros");
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.target === buscador) setBuscadorInView(entry.isIntersecting);
-          if (entry.target === nosotros) setNosotrosInView(entry.isIntersecting);
         });
       },
       // Descuenta la altura del header sticky y considera "en vista" la
@@ -43,24 +44,25 @@ export default function Header() {
     );
 
     if (buscador) observer.observe(buscador);
-    if (nosotros) observer.observe(nosotros);
     return () => observer.disconnect();
-  }, []);
+  }, [isHome]);
 
   function isItemActive(item: NavItem) {
-    if (item.tabId) return buscadorInView && activeTab === item.tabId;
-    if (item.href === "#nosotros") return nosotrosInView;
-    // "Inicio" actúa como estado por defecto: activo mientras no estemos
-    // viendo el buscador ni la sección de Nosotros.
-    return !buscadorInView && !nosotrosInView;
+    if (item.href === "/nosotros") return pathname === "/nosotros";
+    if (item.tabId) return isHome && buscadorInView && activeTab === item.tabId;
+    // "Inicio" actúa como estado por defecto: activo en home mientras no
+    // estemos viendo el buscador.
+    return isHome && !buscadorInView;
   }
 
   function handleNavClick(e: React.MouseEvent<HTMLAnchorElement>, item: NavItem) {
-    if (!item.tabId) return;
+    if (!item.tabId || !isHome) return;
     // El buscador activo cambia de id dinámicamente (#vuelos, #hoteles, ...),
     // así que el salto nativo del href no es confiable si se viene de otro
     // servicio: primero se cambia la pestaña y luego se hace scroll a mano
-    // hasta el contenedor estable "#buscador".
+    // hasta el contenedor estable "#buscador". Si venimos de otra página
+    // (isHome === false), se deja la navegación normal a "/#slug", que al
+    // cargar la home activa la pestaña correcta vía SearchTabContext.
     e.preventDefault();
     setActiveTab(item.tabId);
     requestAnimationFrame(() => {
@@ -71,7 +73,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <a href="#inicio" className="flex items-center gap-2">
+        <a href="/#inicio" className="flex items-center gap-2">
           <Image
             src="/agendatur-logo.jpg"
             alt="Agendatur — Viaja a tu manera"

@@ -92,9 +92,11 @@ export default function Footer() {
             Información de interés
           </h4>
           <ul className="space-y-2 text-sm text-blue-100/90">
-            <li><a href="#tips" className="hover:text-white">Tips de viaje</a></li>
-            <li><a href="#categorias" className="hover:text-white">Destinos</a></li>
-            <li><a href="#paquetes" className="hover:text-white">Paquetes</a></li>
+            <li><a href="/#tips" className="hover:text-white">Tips de viaje</a></li>
+            <li><a href="/#categorias" className="hover:text-white">Destinos</a></li>
+            <li><a href="/paquetes" className="hover:text-white">Paquetes turísticos</a></li>
+            <li><a href="/cruceros" className="hover:text-white">Cruceros desde Colombia</a></li>
+            <li><a href="/nosotros" className="hover:text-white">Nosotros</a></li>
             <li>
               <button
                 type="button"
@@ -131,8 +133,8 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="mailto:servicioalcliente@agendatur.com" className="hover:text-white">
-                servicioalcliente@agendatur.com
+              <a href="mailto:viajes@agendatur.onmicrosoft.com" className="hover:text-white">
+                viajes@agendatur.onmicrosoft.com
               </a>
             </li>
           </ul>

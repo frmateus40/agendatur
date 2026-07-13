@@ -81,13 +81,19 @@ function IconCheckCircle({ className }: { className?: string }) {
 
 const VALUE_ICONS = [IconHandshake, IconShield, IconStar, IconPlane, IconCheckCircle];
 
-export default function AboutSection() {
+interface AboutSectionProps {
+  headingLevel?: "h1" | "h2";
+}
+
+export default function AboutSection({ headingLevel = "h2" }: AboutSectionProps) {
+  const Heading = headingLevel;
+
   return (
     <section id="nosotros" className="scroll-mt-24 bg-white py-16 md:py-20">
       <div className="mx-auto max-w-7xl px-4">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-2">
           <div>
-            <h2 className="text-2xl font-extrabold text-gray-900 md:text-4xl">Nosotros</h2>
+            <Heading className="text-2xl font-extrabold text-gray-900 md:text-4xl">Nosotros</Heading>
             <p className="mt-4 text-sm leading-relaxed text-gray-500 md:text-base">{ABOUT_INTRO}</p>
           </div>
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-sm md:aspect-[5/4]">

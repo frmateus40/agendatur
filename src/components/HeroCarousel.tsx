@@ -67,7 +67,7 @@ export default function HeroCarousel() {
 
       <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 pb-28 text-center text-white">
         <h1 className="max-w-3xl text-4xl font-extrabold leading-tight drop-shadow-md md:text-6xl">
-          Tu próximo viaje empieza aquí
+          Agencia de viajes digital en Colombia: tu próximo viaje empieza aquí
         </h1>
         <p className="mt-4 max-w-xl text-lg font-medium text-white/90 drop-shadow-sm md:text-xl">
           {SLIDES[active].subtitle}
