@@ -12,7 +12,7 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "Inicio", href: "/#inicio" },
+  { label: "Inicio", href: "/" },
   { label: "Vuelos", href: `/#${TAB_SLUGS.flights}`, tabId: "flights" },
   { label: "Hoteles", href: `/#${TAB_SLUGS.hotels}`, tabId: "hotels" },
   { label: "Autos", href: `/#${TAB_SLUGS.cars}`, tabId: "cars" },
@@ -73,7 +73,7 @@ export default function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-gray-100 bg-white shadow-sm">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3">
-        <a href="/#inicio" className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <Image
             src="/agendatur-logo.jpg"
             alt="Agendatur — Viaja a tu manera"

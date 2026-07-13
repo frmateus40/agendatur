@@ -37,7 +37,7 @@ export default function PaquetesPage() {
       <Header />
       <main className="flex-1">
         <nav aria-label="Ruta de navegación" className="mx-auto max-w-7xl px-4 pt-6 text-xs text-gray-500">
-          <a href="/#inicio" className="hover:text-brand-primary-medium">
+          <a href="/" className="hover:text-brand-primary-medium">
             Inicio
           </a>{" "}
           / <span className="text-gray-700">Paquetes</span>
