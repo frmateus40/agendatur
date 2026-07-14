@@ -2,7 +2,7 @@
 // datos del negocio o textos de metadatos — no hace falta tocar componentes.
 
 /** Dominio público del sitio (usado en canonical, sitemap, OG, JSON-LD). */
-export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://agendatur.vercel.app").replace(/\/$/, "");
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.viajesagendatur.com").replace(/\/$/, "");
 
 /** Palabras clave objetivo — lista fácil de ampliar/editar. */
 export const TARGET_KEYWORDS: string[] = [
