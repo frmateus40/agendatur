@@ -34,8 +34,8 @@ export default function PackagesGrid({ headingLevel = "h2", showViewAllLink = tr
           Paquetes turísticos destacados
         </Heading>
         <p className="mx-auto mt-3 max-w-xl text-sm text-gray-500 md:text-base">
-          Planes de viaje y paquetes todo incluido — ejemplos que se actualizarán con las
-          tarifas y destinos reales de la agencia.
+          Planes con salidas confirmadas desde Colombia. Cotiza por WhatsApp y te armamos el
+          plan a tu medida.
         </p>
       </div>
 

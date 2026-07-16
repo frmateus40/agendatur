@@ -1,21 +1,3 @@
-function IconFacebook({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
-      <path d="M14 9h2.5V6H14c-2 0-3.5 1.6-3.5 3.6V11H8v3h2.5v7H13v-7h2.4l.4-3H13V9.8c0-.5.3-.8.8-.8Z" />
-    </svg>
-  );
-}
-
-function IconInstagram({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" className={className} aria-hidden="true">
-      <rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="1.8" />
-      <circle cx="17.3" cy="6.7" r="1" fill="currentColor" />
-    </svg>
-  );
-}
-
 function IconWhatsapp({ className }: { className?: string }) {
   return (
     <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
@@ -55,20 +37,6 @@ export default function Footer() {
             experiencias inolvidables con los mejores precios y acompañamiento en cada paso.
           </p>
           <div className="mt-5 flex gap-3">
-            <a
-              href="#"
-              aria-label="Facebook"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-            >
-              <IconFacebook className="h-4 w-4" />
-            </a>
-            <a
-              href="#"
-              aria-label="Instagram"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 transition-colors hover:bg-white/20"
-            >
-              <IconInstagram className="h-4 w-4" />
-            </a>
             <a
               href="https://wa.me/573102276645"
               aria-label="WhatsApp"
