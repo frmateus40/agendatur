@@ -66,6 +66,9 @@ export default function PackagesGrid({ headingLevel = "h2", showViewAllLink = tr
               </p>
               <h3 className="mt-1 text-lg font-bold text-gray-900">{pkg.destination}</h3>
               <p className="mt-1 flex-1 text-xs text-gray-500">{pkg.departure}</p>
+              {pkg.displayPrice && (
+                <p className="mt-2 text-sm font-bold text-brand-primary">{pkg.displayPrice}</p>
+              )}
 
               <button
                 onClick={() => setTripSummary(buildTripSummary(pkg))}
